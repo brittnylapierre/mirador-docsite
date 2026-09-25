@@ -1,0 +1,53 @@
+# Troubleshooting
+
+## The Viewer Is Blank
+
+Check that the container ID in the HTML matches the `id` passed to `Mirador.viewer`. Then confirm the
+container and its parent elements have a usable height.
+
+## The Viewer Opens But The Resource Does Not Load
+
+Check the browser console and network panel. Confirm that the manifest URL is reachable from the page,
+returns valid JSON, and is not blocked by authentication, CORS, or a local network rule.
+
+## The Layout Is Too Open For A Single Object Page
+
+Disable workspace controls and prevent the default window from closing.
+
+```js
+Mirador.viewer({
+  id: "mirador",
+  window: {
+    allowClose: false,
+  },
+  workspaceControlPanel: {
+    enabled: false,
+  },
+});
+```
+
+## Search Does Not Appear
+
+The manifest needs a compatible IIIF Content Search API service. If a service exists, check that the
+window sidebar and search panel have not been disabled by local configuration.
+
+## Book View Is Not Available
+
+Mirador can restrict view choices based on the IIIF resource’s behaviors. If you intentionally want
+to allow book view for a resource without paged behavior, review the configured `window.views` values.
+
+## Thumbnails Do Not Load In An Angular Integration
+
+The upstream FAQ notes that Angular’s Zone.js IntersectionObserver patch can interfere with thumbnail
+lazy loading in Mirador 3 integrations. Review Zone.js configuration if you are maintaining that type
+of older integration.
+
+## Annotation HTML Is Sanitized
+
+Mirador sanitizes annotation HTML. Adjust the annotation sanitization rules only after reviewing the
+security implications and the rules available in Mirador core.
+
+## Source
+
+- [Frequently Asked Questions](https://github.com/projectmirador/mirador/wiki/Frequently-Asked-Questions)
+- [Annotation compatibility support](https://github.com/projectmirador/mirador/wiki/Annotation-compatibility-support)

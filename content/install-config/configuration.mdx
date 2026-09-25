@@ -1,0 +1,367 @@
+# Configuration
+
+Mirador configuration controls the starting state of the viewer: loaded manifests, window behavior,
+workspace layout, language options, available controls, search behavior, annotations, and
+OpenSeadragon options.
+
+Start with the official defaults in
+[`src/config/settings.js`](https://github.com/ProjectMirador/mirador/blob/main/src/config/settings.js),
+then override only what your local instance needs. Make one configuration change at a time and
+refresh the viewer after each change.
+
+## Minimal Viewer
+
+```js
+Mirador.viewer({
+  id: "mirador",
+  windows: [
+    {
+      manifestId: "https://purl.stanford.edu/sn904cj3429/iiif/manifest",
+    },
+  ],
+});
+```
+
+## Single-Item Reading View
+
+Use this pattern when a page should focus on one object and minimize workspace tinkering.
+
+```js
+Mirador.viewer({
+  id: "mirador",
+  windows: [
+    {
+      manifestId: "https://purl.stanford.edu/sn904cj3429/iiif/manifest",
+      thumbnailNavigationPosition: "far-bottom",
+    },
+  ],
+  window: {
+    allowClose: false,
+    sideBarPanel: "attribution",
+    sideBarOpen: true,
+  },
+  workspace: {
+    showZoomControls: true,
+    type: "mosaic",
+  },
+  workspaceControlPanel: {
+    enabled: false,
+  },
+});
+```
+
+## Elastic Workspace
+
+Use the elastic workspace when users need freer window placement for loose exploration or comparison
+work.
+
+```js
+Mirador.viewer({
+  id: "mirador",
+  windows: [
+    {
+      manifestId: "https://iiif.bodleian.ox.ac.uk/iiif/manifest/e32a277e-91e2-4a6d-8ba6-cc4bad230410.json",
+    },
+  ],
+  workspace: {
+    allowNewWindows: true,
+    draggingEnabled: true,
+    height: 5000,
+    type: "elastic",
+    viewportPosition: { x: 0, y: 0 },
+    width: 5000,
+  },
+  window: {
+    elastic: {
+      height: 400,
+      width: 480,
+    },
+  },
+});
+```
+
+## Preload Windows And Build A Catalog
+
+Use `windows` for resources that should open immediately. Use `catalog` for resources that should be
+available through the add-resource flow.
+
+```js
+Mirador.viewer({
+  id: "mirador-viewer",
+  windows: [
+    {
+      manifestId: "https://damsssl.llgc.org.uk/iiif/2.0/1556378/manifest.json",
+    },
+    {
+      manifestId: "https://damsssl.llgc.org.uk/iiif/2.0/1487439/manifest.json",
+      canvasIndex: 1,
+    },
+  ],
+  catalog: [
+    {
+      manifestId: "https://damsssl.llgc.org.uk/iiif/2.0/1556378/manifest.json",
+      provider: "The National Library of Wales",
+    },
+    {
+      manifestId: "https://cdm16866.contentdm.oclc.org/iiif/info/cchm_photo/5342/manifest.json",
+      provider: "Washington State University",
+    },
+  ],
+});
+```
+
+The practical distinction matters: deleting a resource from `catalog` does not remove it from
+`windows` if the window is explicitly preloaded.
+
+## Window Defaults And Per-Window Starts
+
+Global `window` settings define shared behavior. Individual objects inside `windows` can set the
+starting canvas, sidebar state, thumbnail placement, or view.
+
+```js
+Mirador.viewer({
+  id: "mirador-viewer",
+  window: {
+    sideBarPanel: "canvas",
+  },
+  windows: [
+    {
+      manifestId: "https://iiif.bodleian.ox.ac.uk/iiif/manifest/390fd0e8-9eae-475d-9564-ed916ab9035c.json",
+      canvasIndex: 22,
+      sideBarOpen: true,
+      thumbnailNavigationPosition: "far-right",
+    },
+  ],
+});
+```
+
+## Controls And Sidebar Panels
+
+Use global `window` defaults when you need a locked-down viewer, a simplified top bar, or a specific
+set of sidebar panels.
+
+```js
+Mirador.viewer({
+  id: "mirador-viewer",
+  window: {
+    allowClose: false,
+    allowFullscreen: true,
+    allowMaximize: true,
+    allowTopMenuButton: false,
+    allowWindowSideBar: true,
+    hideWindowTitle: false,
+    sideBarOpen: true,
+    sideBarPanel: "info",
+    panels: {
+      info: true,
+      attribution: true,
+      canvas: true,
+      annotations: true,
+      search: true,
+      layers: false,
+    },
+  },
+});
+```
+
+## Thumbnail Navigation
+
+Thumbnail navigation has global defaults and per-window starting positions. Use these when a viewer
+should always open with a filmstrip or side rail.
+
+```js
+Mirador.viewer({
+  id: "mirador-viewer",
+  thumbnailNavigation: {
+    defaultPosition: "far-bottom",
+    displaySettings: true,
+    height: 130,
+    showThumbnailLabels: true,
+    width: 100,
+  },
+  thumbnails: {
+    preferredFormats: ["jpg", "png", "webp", "tif"],
+  },
+  windows: [
+    {
+      manifestId: "https://purl.stanford.edu/sn904cj3429/iiif/manifest",
+      thumbnailNavigationPosition: "far-bottom",
+    },
+  ],
+});
+```
+
+## Gallery View
+
+Use gallery view to help users scan a manifest with many canvases.
+
+```js
+Mirador.viewer({
+  id: "mirador",
+  windows: [
+    {
+      manifestId: "https://iiif.bodleian.ox.ac.uk/iiif/manifest/e32a277e-91e2-4a6d-8ba6-cc4bad230410.json",
+      view: "gallery",
+    },
+  ],
+  window: {
+    views: [{ key: "single" }, { key: "gallery" }],
+  },
+});
+```
+
+## View Type Defaults
+
+Mirador can map view types to IIIF `viewingHint` or `behavior` values. If the manifest does not
+provide a useful hint, use `window.defaultView` or a per-window `view`.
+
+```js
+Mirador.viewer({
+  id: "mirador-viewer",
+  window: {
+    defaultView: "single",
+    views: [
+      { key: "single", behaviors: ["individuals"] },
+      { key: "book", behaviors: ["paged"] },
+      { key: "scroll", behaviors: ["continuous"] },
+      { key: "gallery" },
+    ],
+  },
+  windows: [
+    {
+      manifestId: "https://iiif.bodleian.ox.ac.uk/iiif/manifest/e32a277e-91e2-4a6d-8ba6-cc4bad230410.json",
+      view: "gallery",
+    },
+  ],
+});
+```
+
+## Annotation And Search Defaults
+
+Annotation display and search depend first on the loaded IIIF resource. Configuration can further
+shape which annotation motivations appear and which search or sidebar experience users see first.
+
+```js
+Mirador.viewer({
+  id: "mirador",
+  annotations: {
+    htmlSanitizationRuleSet: "iiif",
+    filteredMotivations: [],
+  },
+});
+```
+
+## Request Hooks
+
+Use request preprocessors and postprocessors when your installation needs to add headers, rewrite
+requests, or adjust retrieved data before it enters Mirador state.
+
+```js
+Mirador.viewer({
+  id: "mirador-viewer",
+  requests: {
+    preprocessors: [
+      (url, options) =>
+        url.includes("iiif.example.org")
+          ? { ...options, headers: { ...(options?.headers || {}), "X-Viewer": "mirador" } }
+          : options,
+    ],
+    postprocessors: [
+      (url, action) => action,
+    ],
+  },
+});
+```
+
+## Exported State
+
+Use `export` settings to control what appears in downloaded or serialized workspace state. This is
+useful when you want saved workspaces to include layout and window state but omit resources that can
+be re-fetched.
+
+```js
+Mirador.viewer({
+  id: "mirador-viewer",
+  export: {
+    catalog: true,
+    companionWindows: true,
+    config: true,
+    elasticLayout: true,
+    layers: true,
+    manifests: {
+      filter: ([id]) => !id.startsWith("http"),
+    },
+    viewers: true,
+    windows: true,
+    workspace: true,
+  },
+});
+```
+
+## OpenSeadragon Options
+
+Viewer behavior can be tuned through `osdConfig`.
+
+```js
+Mirador.viewer({
+  id: "mirador",
+  windows: [{ manifestId: "https://purl.stanford.edu/fg165hz3589/iiif/manifest" }],
+  osdConfig: {
+    maxZoomPixelRatio: 5,
+  },
+});
+```
+
+## Audio And Video Options
+
+Audio and video settings pass props to the underlying media elements. The defaults enable browser
+controls and use anonymous CORS.
+
+```js
+Mirador.viewer({
+  id: "mirador-viewer",
+  audioOptions: {
+    controls: true,
+    crossOrigin: "anonymous",
+  },
+  videoOptions: {
+    controls: true,
+    crossOrigin: "anonymous",
+  },
+});
+```
+
+## Authentication Services
+
+Mirador recognizes IIIF Auth service profiles for external, kiosk, clickthrough, and login flows.
+Adjust `auth.serviceProfiles` when your institution needs different handling for protected content.
+
+```js
+Mirador.viewer({
+  id: "mirador-viewer",
+  auth: {
+    serviceProfiles: [
+      { profile: "http://iiif.io/api/auth/1/external", external: true },
+      { profile: "http://iiif.io/api/auth/1/kiosk", kiosk: true },
+      { profile: "http://iiif.io/api/auth/1/clickthrough" },
+      { profile: "http://iiif.io/api/auth/1/login" },
+    ],
+  },
+});
+```
+
+## Accessibility Implementation Checks
+
+When customizing Mirador, preserve the accessibility affordances exposed by the default viewer:
+
+- Keep labels on custom buttons, menus, and plugin controls.
+- Test light and dark themes for contrast.
+- Keep alt text meaningful when embedding surrounding page images.
+- Review custom plugin UI with keyboard and screen-reader workflows.
+
+## Source
+
+- [settings.js](https://github.com/ProjectMirador/mirador/blob/main/src/config/settings.js)
+- [Configuration Recipes](https://github.com/projectmirador/mirador/wiki/Configuration-Recipes)
+- [Frequently Asked Questions](https://github.com/projectmirador/mirador/wiki/Frequently-Asked-Questions)
+- [Mirador 3 Workshop](https://docs.google.com/document/d/1_LPOcwMOM051qzhqMixqLLKXZ5SH9Vjd3_UA-tZniek/edit?tab=t.0#heading=h.cbywkmpvhg5a)

@@ -1,0 +1,27 @@
+# Working with protected or authenticated resources
+
+Some IIIF objects require login, clickthrough, or other access flows before they can be viewed.
+
+## Login and clickthrough flows
+
+- Some resources require a user to log in before the viewer can load the object.
+- Clickthrough workflows may ask the user to accept terms before viewing the item.
+- These flows are part of the IIIF auth pattern and are often required by institutions or service providers.
+
+## Kiosk and external auth patterns
+
+- Some environments use kiosk-style access or external authentication services.
+- Mirador may rely on the browser session and the resource’s IIIF auth configuration to grant access.
+- External auth flows may involve redirects or additional security checks.
+
+## Troubleshooting access denied or auth prompts
+
+- If a resource fails to load, check whether login or clickthrough is required.
+- Confirm that cookies, sessions, and browser permissions are functioning correctly.
+- Review the IIIF auth service documentation if access is unexpectedly denied.
+
+## How Mirador handles IIIF auth
+
+- Mirador follows the auth flow provided by the resource and the browser environment.
+- Support depends on the manifest, auth service, and the viewer configuration.
+- When auth is configured correctly, users can access protected resources without leaving the viewer experience.

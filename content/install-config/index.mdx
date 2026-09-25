@@ -1,0 +1,50 @@
+# Install & Config Guide
+
+This section is for people adding Mirador to a website, application, repository interface, exhibit,
+or research tool. It covers installation and mounting patterns, configuration bundles, plugins,
+theme customization, language customization, and common implementation issues.
+
+## Choose Your Path
+
+<div className="mirador-grid">
+  <a className="mirador-card" href="/install-config/getting-started">
+    <h3>Getting Started</h3>
+    <p>Pick a package-manager or bundled-script approach and mount Mirador in HTML, JavaScript, or React.</p>
+  </a>
+  <a className="mirador-card" href="/install-config/configuration">
+    <h3>Configure</h3>
+    <p>Preload manifests, choose views, lock down controls, set workspace type, and tune OpenSeadragon.</p>
+  </a>
+  <a className="mirador-card" href="/install-config/plugins">
+    <h3>Extend</h3>
+    <p>Add plugin-based UI and behavior for annotation tools, image controls, menus, and workflow actions.</p>
+  </a>
+</div>
+
+## Implementation Checklist
+
+1. Decide whether you need a simple bundled viewer or a build that supports plugins.
+2. Create a stable container element with explicit height.
+3. Start with one manifest and the smallest useful configuration.
+4. Add workspace, window, and sidebar options only after the base viewer works.
+5. Test the target manifests, collections, search services, annotations, and A/V resources.
+6. Review accessibility, theming, and language requirements before launch.
+
+## Getting Started Track
+
+The getting-started flow gives implementers a practical first-run mount path:
+
+- Compare the hosted UMD build with an npm/yarn application dependency.
+- Mount Mirador from HTML, bundled JavaScript, or React.
+- Create a stable container element with explicit height.
+- Confirm one known manifest renders before adding local customization.
+
+After that, use [Configuration](/install-config/configuration), [Theming & i18n](/install-config/theming-i18n),
+and [Plugins](/install-config/plugins) to see what else Mirador can do.
+
+## Source
+
+- [Installation and build options](https://github.com/projectmirador/mirador/wiki/Installation-and-build-options-available-for-Mirador)
+- [Embedding in another environment](https://github.com/projectmirador/mirador/wiki/Embedding-in-Another-Environment)
+- [Configuration Recipes](https://github.com/projectmirador/mirador/wiki/Configuration-Recipes)
+- [Mirador 3 Workshop](https://docs.google.com/document/d/1_LPOcwMOM051qzhqMixqLLKXZ5SH9Vjd3_UA-tZniek/edit?tab=t.0#heading=h.cbywkmpvhg5a)

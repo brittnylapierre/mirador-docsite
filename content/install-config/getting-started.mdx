@@ -1,0 +1,146 @@
+# Getting Started
+
+Start with a small working viewer before adding custom behavior. A reliable first-run sequence is:
+prepare a JavaScript environment, choose an installation pattern, mount the viewer, and confirm that
+one known IIIF manifest renders. After that, move into the dedicated configuration and plugin
+recipes.
+
+## 1. Prepare The Environment
+
+Start with a JavaScript development environment:
+
+- Node.js and npm.
+- A text or code editor.
+- Chrome or Firefox.
+- React Developer Tools and Redux DevTools for inspecting components and state.
+- A local starter project or application where Mirador will be mounted.
+
+For modern Mirador 4 work, use the current Node version required by your project, but keep the same
+tooling idea: browser devtools plus React/Redux inspection make configuration and plugin debugging
+much easier.
+
+## 2. Choose An Installation Pattern
+
+Mirador can be installed and mounted in several ways. The right pattern depends on whether you need a
+quick viewer on a page or a customized application build with plugins and deeper configuration.
+
+### Package Manager Build
+
+Use npm or yarn when Mirador is part of an application build. This route is best when you control the
+frontend build and want plugin support, bundler integration, or deeper configuration.
+
+```sh
+npm install mirador
+```
+
+```sh
+yarn add mirador
+```
+
+The starter app mounts Mirador into a DOM element and loads a bundled JavaScript entry file.
+
+```html
+<div id="mirador-viewer"></div>
+<script src="/dist/main.js"></script>
+```
+
+The corresponding JavaScript creates a config object, a plugin array, and the viewer instance.
+
+```js
+import Mirador from "mirador/dist/es/src/index";
+
+const config = {
+  id: "mirador-viewer",
+  windows: [
+    {
+      manifestId: "https://purl.stanford.edu/fr426cg9537/iiif/manifest",
+    },
+  ],
+};
+
+const plugins = [];
+
+Mirador.viewer(config, plugins);
+```
+
+When mounting in React, create the Mirador instance after the container is mounted. Keep the
+container ID stable and avoid re-creating the viewer every render.
+
+```jsx
+import { useEffect } from "react";
+import Mirador from "mirador";
+
+export function MiradorViewer({ config }) {
+  useEffect(() => {
+    Mirador.viewer(config);
+  }, [config]);
+
+  return <div id={config.id} className="mirador-container" />;
+}
+```
+
+Mirador 4 uses Vite for packaging. Its published distribution includes builds for import-based and
+require-based environments. Use the ES module build when you are integrating with modern bundlers and
+plugins.
+
+### Bundled Script
+
+For a simple HTML page, load the bundled build and initialize a viewer against a container element.
+Pin a major version rather than relying on `latest` for production. This path is best for a quick
+proof of concept or a page that does not have its own JavaScript build. The essential mount pattern
+is: create a container, make sure it has height, and pass the container ID to `Mirador.viewer`.
+
+```html
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" />
+<script src="https://unpkg.com/mirador@^4/dist/mirador.min.js"></script>
+
+<div id="mirador-viewer"></div>
+
+<script>
+  Mirador.viewer({
+    id: "mirador-viewer",
+    windows: [
+      {
+        manifestId: "https://purl.stanford.edu/fr426cg9537/iiif/manifest",
+      },
+    ],
+  });
+</script>
+```
+
+### Container Sizing
+
+Mirador needs real space to render in either installation pattern. Set a height on the container and
+its ancestors where necessary.
+
+```css
+html,
+body,
+#app,
+.mirador-container {
+  height: 100%;
+}
+
+.mirador-container {
+  position: relative;
+}
+```
+
+## 3. Explore Configuration And Plugins
+
+Once the starter viewer renders, use the focused guide pages for the next layer of work:
+
+- [Configuration](/install-config/configuration) shows how to preload resources, build a catalog,
+  set window defaults, choose workspace behavior, tune controls, and adjust OpenSeadragon.
+- [Theming & i18n](/install-config/theming-i18n) covers Material UI themes, color choices, and
+  translation overrides.
+- [Plugins](/install-config/plugins) explains when configuration is not enough and how to add, wrap,
+  or package plugin behavior.
+- [Troubleshooting](/install-config/troubleshooting) covers blank viewers, missing search, view
+  issues, and resource-loading checks.
+
+## Source
+
+- [Installation and build options](https://github.com/projectmirador/mirador/wiki/Installation-and-build-options-available-for-Mirador)
+- [Embedding Mirador](https://github.com/projectmirador/mirador/wiki/Embedding-in-Another-Environment)
+- [Mirador 3 Workshop](https://docs.google.com/document/d/1_LPOcwMOM051qzhqMixqLLKXZ5SH9Vjd3_UA-tZniek/edit?tab=t.0#heading=h.cbywkmpvhg5a)

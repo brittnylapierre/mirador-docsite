@@ -1,0 +1,344 @@
+@import "tailwindcss";
+@import "nextra-theme-docs/style.css";
+
+@variant dark (&:where(.dark *));
+
+:root {
+  color-scheme: light;
+  --mirador-secondary: rgb(25, 103, 210);
+  --mirador-secondary-hover: rgb(25, 103, 210);
+  --mirador-secondary-ink: rgb(25, 103, 210);
+  --mirador-secondary-soft: rgba(25, 103, 210, 0.1);
+  --mirador-secondary-border: rgba(25, 103, 210, 0.22);
+  --mirador-surface-border: rgba(15, 23, 42, 0.1);
+  --mirador-surface-shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
+  --mirador-text-muted: rgb(73 86 100);
+}
+
+body {
+  --nextra-bg: 255 255 255;
+}
+
+.dark body {
+  --nextra-bg: 16 20 24;
+  --mirador-secondary: rgb(25, 103, 210);
+  --mirador-secondary-hover: rgb(25, 103, 210);
+  --mirador-secondary-ink: rgb(25, 103, 210);
+  --mirador-secondary-soft: rgba(25, 103, 210, 0.18);
+  --mirador-secondary-border: rgba(25, 103, 210, 0.42);
+  --mirador-surface-border: rgba(148, 163, 184, 0.18);
+  --mirador-surface-shadow: 0 18px 45px rgba(0, 0, 0, 0.28);
+  --mirador-text-muted: rgb(203 213 225);
+}
+
+.nextra-banner {
+  background: var(--mirador-secondary);
+  color: white;
+  z-index: 1400;
+}
+
+.nextra-banner a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+footer a {
+  color: var(--mirador-secondary) !important;
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+footer a:hover {
+  color: var(--mirador-secondary-hover) !important;
+  text-decoration-thickness: 2px;
+}
+
+.nextra-navbar {
+  z-index: 1300;
+}
+
+.mirador-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.mirador-logo img {
+  flex: 0 0 auto;
+}
+
+.dark .mirador-logo img {
+  filter: invert(1);
+}
+
+.mirador-hero {
+  display: grid;
+  gap: clamp(1.25rem, 3vw, 2.25rem);
+  margin: 0 0 clamp(2rem, 4vw, 3rem);
+  padding: clamp(0.5rem, 2vw, 1.25rem) 0 0;
+}
+
+.mirador-hero-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-self: center;
+  max-width: 54rem;
+  text-align: center;
+}
+
+.mirador-hero h1 {
+  color: rgb(15 23 42);
+  margin: 0;
+  max-width: none;
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  line-height: 1;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-wrap: balance;
+}
+
+.dark .mirador-hero h1 {
+  color: rgb(248 250 252);
+}
+
+.mirador-kicker {
+  color: var(--mirador-secondary);
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  margin: 0 0 0.65rem;
+  text-transform: uppercase;
+}
+
+.dark .mirador-kicker {
+  color: var(--mirador-secondary-ink);
+}
+
+.mirador-lede {
+  max-width: 44rem;
+  color: var(--mirador-text-muted);
+  font-size: clamp(1rem, 1.6vw, 1.12rem);
+  line-height: 1.62;
+  margin: 1rem 0 0;
+}
+
+.mirador-lede a {
+  color: var(--mirador-secondary) !important;
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.mirador-lede a:hover {
+  color: var(--mirador-secondary-hover) !important;
+  text-decoration-thickness: 2px;
+}
+
+.mirador-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  justify-content: center;
+  margin-top: 1.4rem;
+}
+
+.mirador-button {
+  align-items: center;
+  border: 1px solid var(--mirador-secondary);
+  border-radius: 7px;
+  display: inline-flex;
+  font-weight: 700;
+  justify-content: center;
+  min-height: 2.75rem;
+  padding: 0 1rem;
+  text-decoration: none;
+  transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease;
+}
+
+.mirador-button.primary {
+  background: var(--mirador-secondary);
+  color: white;
+}
+
+.mirador-button.primary:hover {
+  background: var(--mirador-secondary-hover);
+  border-color: var(--mirador-secondary-hover);
+}
+
+.mirador-button.secondary {
+  background: var(--mirador-secondary-soft);
+  color: var(--mirador-secondary-ink);
+}
+
+.mirador-button.secondary:hover {
+  border-color: var(--mirador-secondary-hover);
+  color: var(--mirador-secondary-hover);
+}
+
+.mirador-button:focus-visible,
+.mirador-card:focus-visible {
+  outline: 3px solid var(--mirador-secondary-soft);
+  outline-offset: 3px;
+}
+
+.mirador-panel {
+  background: rgb(248 250 252);
+  border: 1px solid var(--mirador-surface-border);
+  border-radius: 8px;
+  box-shadow: var(--mirador-surface-shadow);
+  isolation: isolate;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  z-index: 0;
+}
+
+.dark .mirador-panel {
+  background: rgb(15 23 42);
+}
+
+.mirador-live-viewer-shell {
+  background: white;
+  height: clamp(620px, 72vh, 820px);
+  min-height: 620px;
+  position: relative;
+  width: 100%;
+}
+
+.dark .mirador-live-viewer-shell {
+  background: rgb(16 20 24);
+}
+
+.mirador-live-viewer {
+  height: 100%;
+  position: relative;
+  width: 100%;
+}
+
+.mirador-live-status {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--mirador-text-muted);
+  display: flex;
+  font-size: 0.95rem;
+  inset: 0;
+  justify-content: center;
+  position: absolute;
+  z-index: 2;
+}
+
+.dark .mirador-live-status {
+  background: rgba(16, 20, 24, 0.92);
+}
+
+.mirador-panel iframe {
+  display: block;
+  height: clamp(560px, 72vh, 760px);
+  min-height: 560px;
+  width: 100%;
+}
+
+.mirador-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  margin: 1.5rem 0 2rem;
+}
+
+.mirador-card {
+  background: white;
+  border: 1px solid var(--mirador-secondary-border);
+  border-radius: 8px;
+  color: inherit;
+  padding: 1rem;
+  text-decoration: none !important;
+  transition: border-color 150ms ease, box-shadow 150ms ease, transform 150ms ease;
+}
+
+.mirador-card,
+.mirador-card:hover,
+.mirador-card:focus {
+  text-decoration: none !important;
+  text-decoration-line: none !important;
+}
+
+.mirador-card * {
+  text-decoration: none !important;
+}
+
+.dark .mirador-card {
+  background: rgb(16 20 24);
+}
+
+.mirador-card:hover {
+  border-color: var(--mirador-secondary);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+  transform: translateY(-1px);
+}
+
+.dark .mirador-card:hover {
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.24);
+}
+
+.mirador-card h3 {
+  color: rgb(15 23 42);
+  font-size: 1.08rem;
+  font-weight: 750;
+  line-height: 1.3;
+  margin: 0;
+}
+
+.dark .mirador-card h3 {
+  color: rgb(248 250 252);
+}
+
+.mirador-card:hover h3 {
+  color: var(--mirador-secondary);
+}
+
+.mirador-card p {
+  color: var(--mirador-text-muted);
+  font-size: 0.96rem;
+  line-height: 1.65;
+  margin: 0.8rem 0 0;
+}
+
+.mirador-mark {
+  background: white;
+  border: 1px solid var(--mirador-surface-border);
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+  height: clamp(2.6rem, 5vw, 3.4rem);
+  margin-bottom: 0.95rem;
+  padding: 0.42rem;
+  width: auto;
+}
+
+.dark .mirador-mark {
+  border-color: rgba(255, 255, 255, 0.14);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.24);
+}
+
+@media (max-width: 640px) {
+  .mirador-actions {
+    flex-direction: column;
+  }
+
+  .mirador-button {
+    width: 100%;
+  }
+
+  .mirador-panel iframe {
+    height: 70vh;
+    min-height: 420px;
+  }
+
+  .mirador-live-viewer-shell {
+    height: 70vh;
+    min-height: 500px;
+  }
+}

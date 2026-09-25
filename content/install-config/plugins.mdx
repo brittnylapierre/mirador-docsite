@@ -1,0 +1,149 @@
+# Plugins
+
+Plugins extend Mirador without requiring every customization to live in core. Mirador 4 plugins are
+React-based and are commonly packaged with Vite library mode.
+
+Treat plugins as the second step after configuration: exhaust initialization settings first, then add
+a plugin when you need to inject, wrap, or react to behavior that settings cannot express.
+
+## When To Use A Plugin
+
+- Add controls to a window menu or workspace menu.
+- Add an annotation editor or image tools.
+- Connect Mirador to institutional services.
+- Wrap or replace a UI region.
+- Dispatch Mirador state actions from a custom interface.
+
+## Mirador 4 Plugin Shape
+
+Each plugin declares a `name`, a `target`, and a `mode`.
+
+```js
+export const DemoPlugin = {
+  name: "Demo",
+  target: "WindowTopBarPluginMenu",
+  mode: "add",
+  component: DemoButton,
+};
+```
+
+## Plugin Shape Concepts
+
+Older plugin examples use a broader plugin object that can provide config defaults, a React
+component, state mappings, reducers, sagas, a mode, and a target.
+
+```js
+const plugin = {
+  config: {},
+  component: CustomComponent,
+  mapDispatchToProps: () => ({}),
+  mapStateToProps: () => ({}),
+  mode: "add",
+  reducers: [],
+  target: "CanvasInfo",
+};
+```
+
+The exact API surface differs between Mirador versions, but the concepts remain useful:
+
+- **Null/no-render plugins:** add side effects such as analytics or background state behavior.
+- **Add plugins:** inject new UI into a defined plugin target.
+- **Wrap plugins:** replace, surround, or alter the props of an existing Mirador component.
+
+## Existing Plugin Example
+
+Image tools are a useful example of installing a plugin package and enabling plugin-specific window
+configuration.
+
+```js
+import miradorImageToolsPlugin from "mirador-image-tools/es/plugins/miradorImageToolsPlugin.js";
+
+const config = {
+  id: "mirador-viewer",
+  windows: [
+    {
+      imageToolsEnabled: true,
+      imageToolsOpen: true,
+      manifestId: "https://purl.stanford.edu/fr426cg9537/iiif/manifest",
+    },
+  ],
+};
+
+const plugins = [...miradorImageToolsPlugin];
+```
+
+## Add Mode Example
+
+Use add mode to place new content into an available plugin target.
+
+```js
+const plugins = [
+  {
+    mode: "add",
+    component: CustomMetadata,
+    target: "CanvasInfo",
+    mapStateToProps: (state, { canvasId, windowId }) => ({
+      canvasId,
+      windowId,
+    }),
+  },
+];
+```
+
+## Wrap Mode Example
+
+Use wrap mode when you need to replace or augment an existing component.
+
+```js
+const plugins = [
+  {
+    mode: "wrap",
+    component: CustomBrand,
+    target: "Branding",
+  },
+];
+```
+
+```jsx
+export default function CustomBrand({ TargetComponent, targetProps }) {
+  return <TargetComponent {...targetProps} />;
+}
+```
+
+Plugin packages can export individual plugins and a default array for plugins that are intended to be
+used together.
+
+```js
+export { DemoPlugin };
+export default [DemoPlugin];
+```
+
+## Peer Dependencies
+
+Keep React, Material UI, and Mirador as peer dependencies so your plugin does not bundle conflicting
+copies of Mirador’s runtime dependencies.
+
+```json
+{
+  "peerDependencies": {
+    "@mui/material": "^7.0.0",
+    "mirador": "^4.0.0",
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0"
+  }
+}
+```
+
+## Translation Hooks
+
+For plugin text, import translation helpers from Mirador rather than directly from `react-i18next`.
+
+```js
+import { useTranslation } from "mirador";
+```
+
+## Source
+
+- [Creating a Mirador 4 Plugin](https://github.com/projectmirador/mirador/wiki/Creating-a-Mirador-4-Plugin)
+- [Architecture overview: Add plugins](https://github.com/projectmirador/mirador/wiki/Architecture-overview-2:-Add-plugins)
+- [Mirador 3 Workshop](https://docs.google.com/document/d/1_LPOcwMOM051qzhqMixqLLKXZ5SH9Vjd3_UA-tZniek/edit?tab=t.0#heading=h.cbywkmpvhg5a)

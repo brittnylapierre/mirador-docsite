@@ -1,0 +1,140 @@
+# Theming & i18n
+
+Mirador uses Material UI for its interface foundations. Theme and language choices should be treated
+as part of the installation, not a late-stage cosmetic pass.
+
+Mirador theming usually happens at three levels: override a palette key, override a specific Material
+UI component, or register an entirely new theme.
+
+## Select A Theme
+
+```js
+Mirador.viewer({
+  id: "mirador",
+  selectedTheme: "dark",
+});
+```
+
+## Customize Palette Colors
+
+```js
+Mirador.viewer({
+  id: "mirador",
+  themes: {
+    light: {
+      palette: {
+        primary: {
+          main: "rgb(25, 103, 210)",
+        },
+        secondary: {
+          main: "rgb(25, 103, 210)",
+        },
+      },
+    },
+  },
+});
+```
+
+## Override A Specific Component
+
+Use `theme.overrides` when one Material UI component needs a targeted style change. Floating action
+buttons are a useful small example.
+
+```js
+Mirador.viewer({
+  id: "mirador-viewer",
+  theme: {
+    overrides: {
+      MuiFab: {
+        primary: {
+          backgroundColor: "yellow",
+          color: "black",
+        },
+      },
+    },
+  },
+});
+```
+
+## Register A New Theme
+
+Add a named theme under `themes` when you want users to choose it from the workspace theme menu.
+
+```js
+Mirador.viewer({
+  id: "mirador-viewer",
+  themes: {
+    readingRoom: {
+      palette: {
+        type: "dark",
+        primary: { main: "rgb(25, 103, 210)" },
+        secondary: { main: "rgb(25, 103, 210)" },
+        shades: {
+          dark: "#000000",
+          main: "#424242",
+          light: "#616161",
+        },
+      },
+      typography: {},
+    },
+  },
+  selectedTheme: "readingRoom",
+});
+```
+
+## Override Existing Translation Text
+
+Use `translations` when you need to change copy in a configured language.
+
+```js
+Mirador.viewer({
+  id: "mirador",
+  translations: {
+    en: {
+      downloadExportWorkspace: "Download workspace settings",
+    },
+  },
+});
+```
+
+Find keys in the locale translation files, then override only the copy you need for your
+installation.
+
+## Language Defaults
+
+Use `language` to choose the default interface language. Use `availableLanguages` to control which
+languages appear in the language switcher.
+
+```js
+Mirador.viewer({
+  id: "mirador",
+  language: "en",
+  availableLanguages: {
+    en: "English",
+    fr: "Français",
+    ja: "日本語",
+    "pt-BR": "Português do Brasil",
+  },
+  window: {
+    showLocalePicker: true,
+  },
+});
+```
+
+## Add A Language
+
+Adding a new language requires a locale directory, a translated `translation.json`, and registration
+in Mirador’s i18n resources. Plugin authors should use the translation hooks re-exported by Mirador.
+
+## Right-To-Left Interfaces
+
+Handle right-to-left reading as both an interface concern and a resource-data concern. Localized UI
+text and page direction belong in the application setup, while paged or flowing content should also
+provide the appropriate IIIF `viewingDirection` metadata.
+
+## Source
+
+- [settings.js](https://github.com/ProjectMirador/mirador/blob/main/src/config/settings.js)
+- [Theming Mirador](https://github.com/projectmirador/mirador/wiki/M3-Theming-Mirador)
+- [Internationalization in Mirador 4](https://github.com/projectmirador/mirador/wiki/Internationalization-(i18n)-in-Mirador-4)
+- [Mirador 3 Workshop](https://docs.google.com/document/d/1_LPOcwMOM051qzhqMixqLLKXZ5SH9Vjd3_UA-tZniek/edit?tab=t.0#heading=h.cbywkmpvhg5a)

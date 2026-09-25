@@ -1,0 +1,51 @@
+{
+  "name": "mirador-guide",
+  "version": "2.1.0",
+  "description": "A Nextra guide website for Mirador.",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --port 3003",
+    "build": "next build --webpack",
+    "start": "next start",
+    "postbuild": "pagefind --site .next/server/app --output-path public/_pagefind"
+  },
+  "repository": {
+    "type": "module",
+    "url": "https://github.com/projectmirador/mirador"
+  },
+  "author": "ProjectMirador Community",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/projectmirador/mirador/issues"
+  },
+  "homepage": "https://projectmirador.org/",
+  "dependencies": {
+    "@tailwindcss/postcss": "^4.1.16",
+    "mirador": "^4.1.0",
+    "next": "^16.0.7",
+    "nextra": "^4.6.0",
+    "nextra-theme-docs": "^4.6.0",
+    "postcss": "^8.5.6",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "tailwindcss": "^4.1.16",
+    "zod": "4.1.12"
+  },
+  "dependenciesMeta": {
+    "nextra": {
+      "injected": true
+    },
+    "nextra-theme-docs": {
+      "injected": true
+    }
+  },
+  "overrides": {
+    "zod": "4.1.12"
+  },
+  "devDependencies": {
+    "@types/node": "22.13.10",
+    "@types/react": "19.0.10",
+    "pagefind": "^1.4.0",
+    "typescript": "^5.9.3"
+  }
+}

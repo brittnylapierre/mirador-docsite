@@ -1,0 +1,15 @@
+export default {
+  index: "Overview",
+  "opening-and-loading-a-iiif-object": "Opening and loading a IIIF object",
+  "basic-image-navigation": "Basic image navigation",
+  "comparing-items-in-a-multi-window-workspace": "Comparing items in a multi-window workspace",
+  "using-side-panels-and-metadata": "Using the side panels and metadata",
+  "searching-and-finding-content": "Searching and finding content",
+  "working-with-annotations": "Working with annotations",
+  "working-with-layers-and-complex-canvases": "Working with layers and complex canvases",
+  "using-collections-and-table-of-contents": "Using collections and table of contents",
+  "audio-and-video-viewing": "Audio and video viewing",
+  "working-with-protected-or-authenticated-resources": "Working with protected or authenticated resources",
+  "language-locale-and-appearance-settings": "Language, locale, and appearance settings",
+  "errors-and-troubleshooting": "Errors and troubleshooting",
+};

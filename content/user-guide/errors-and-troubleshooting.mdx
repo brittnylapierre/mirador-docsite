@@ -1,0 +1,28 @@
+# Errors and troubleshooting
+
+This page covers common problems users may encounter while loading or viewing IIIF resources in Mirador.
+
+## When an image fails to load
+
+- Check whether the IIIF image service URL is valid and reachable.
+- Confirm the manifest points to a usable image service or resource.
+- A broken image URL or missing image service is a common cause of display failure.
+
+## Common issues with manifest loading and auth
+
+- Manifest errors may result from invalid JSON, unsupported structure, or a failed resource request.
+- Auth problems may appear as login prompts, denied access, or empty content areas.
+- If access is denied, verify that the resource requires a login or clickthrough flow.
+
+## Common troubleshooting checklist
+
+1. Verify the manifest URL.
+2. Confirm the image service or media source is available.
+3. Check whether the resource requires authentication.
+4. Review the browser console for resource or fetch errors.
+5. Test the same resource in a known-good Mirador environment if needed.
+
+## Good practice
+
+- Start with a stable manifest and confirm the resource works before testing more advanced workflows.
+- Keep track of whether the issue is content-related, auth-related, or viewer-related.
