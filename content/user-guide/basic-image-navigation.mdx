@@ -1,24 +1,26 @@
 ---
 title: Basic Image Navigation
-description: Master deep-zooming, panning, view modes, and thumbnail navigation in Mirador.
+description: Master deep-zooming, panning, view modes, and thumbnail navigation in Mirador using 15th-century Middle English manuscripts.
 ---
 
 # Basic Image Navigation
 
-Mirador utilizes [OpenSeadragon](https://openseadragon.github.io/) to provide deep-zoom capabilities across high-resolution IIIF images. Whether inspecting gigapixel art scans, delicate manuscript handwriting, or multi-page books, Mirador gives you full control over how canvases are displayed and navigated.
+Mirador utilizes [OpenSeadragon](https://openseadragon.github.io/) to provide deep-zoom capabilities across high-resolution IIIF images. Whether inspecting medieval calligraphy, illuminated initials, or multi-page bound codices, Mirador gives you full control over how canvases are displayed and navigated.
 
-![Mirador Single Canvas View](/img/user-guide/manifest-single-view.png)
+In this guide, we explore the 15th-century Middle English manuscript *Mandeville's Travels* ([NLS MS Adv.MS.19.1.11](https://view.nls.uk/manifest/1334/7515/133475158/manifest.json)), with special attention to **Pages 8 and 9**.
+
+![Mirador Single Canvas View - Page 8 of Mandeville's Travels](/img/user-guide/nls-manifest-single-view.png)
 
 ---
 
 ## Zoom, Pan, and Inspect Details
 
-### Zooming
+### Zooming into Manuscript Script
 
 You can adjust the zoom level using multiple interaction methods:
 
-- **Floating Zoom Controls**: Use the overlay controls positioned in the canvas viewport:
-  - **`+` (Zoom in)**: Increases magnification smoothly.
+- **Floating Zoom Controls**: Use the overlay controls positioned on the right side of the canvas:
+  - **`+` (Zoom in)**: Increases magnification smoothly to inspect intricate penstrokes and marginalia.
   - **`-` (Zoom out)**: Decreases magnification.
   - **`⌂` (Reset zoom)**: Resets the canvas to fit perfectly within the window bounds.
 - **Mouse Wheel / Trackpad**: Scroll up or down to zoom continuously towards the cursor position.
@@ -26,15 +28,15 @@ You can adjust the zoom level using multiple interaction methods:
   - `+` or `=` to zoom in.
   - `-` to zoom out.
   - `0` to reset zoom to default.
-- **Double-Click**: Double-click on any part of the canvas to zoom in directly onto that region.
+- **Double-Click**: Double-click on any word or illumination to zoom in directly onto that region.
 
-![Zoomed-in Detail Inspection](/img/user-guide/canvas-zoomed.png)
+![Deep-Zoom Detail of 15th-Century Middle English Text on Page 8](/img/user-guide/nls-canvas-zoomed.png)
 
 ### Panning
 
-To explore different areas of a high-resolution canvas while zoomed in:
+To explore different folios or margins while zoomed in:
 
-- **Click and Drag**: Click anywhere on the canvas and drag to pan across the image.
+- **Click and Drag**: Click anywhere on the canvas and drag to pan across the manuscript leaf.
 - **Arrow Keys**: Use `Up`, `Down`, `Left`, and `Right` arrow keys to pan incrementally.
 
 ---
@@ -43,45 +45,46 @@ To explore different areas of a high-resolution canvas while zoomed in:
 
 Mirador supports three distinct viewing modes tailored to different types of reading and research workflows:
 
-![Window Views and Thumbnail Menu](/img/user-guide/window-views-menu.png)
+![Window Views and Thumbnail Placement Menu](/img/user-guide/nls-window-views-menu.png)
 
 To switch view modes, click the **Window views & thumbnail display** button (`⊞`) in the top-right toolbar of the window:
 
-### 1. Single View
+### 1. Single View (Focused Reading)
 
-**Single View** (default) renders one canvas at a time centered within the viewport. It is ideal for close visual analysis of individual artworks, maps, photographs, and focused manuscript transcription.
+**Single View** (default) renders one canvas at a time centered within the viewport. It is ideal for close paleographic analysis of a single folio, such as Page 8 or Page 9:
 
-### 2. Book View (Two-Up Facing Pages)
+![Single View of Page 9](/img/user-guide/nls-page9-single-view.png)
 
-**Book View** renders adjacent canvases side by side as open spreads, mimicking the physical experience of reading a printed book or bound codex.
+### 2. Book View (Pages 8 and 9 Facing Spread)
 
-![Book View - Two-Up Facing Pages](/img/user-guide/book-view.png)
+**Book View** renders adjacent canvases side by side as open spreads, recreating the physical experience of reading the bound medieval manuscript. Pages 8 and 9 form a stunning two-page opening:
 
-- Mirador automatically accounts for page sequencing and cover pages.
+![Book View - Pages 8 and 9 Facing Spread](/img/user-guide/nls-pages8-9-book-view.png)
+
+- Mirador automatically preserves page sequencing and rectos/versos.
 - When navigating forward or backward, two pages turn simultaneously.
-- If the manifest declares a `viewingDirection` of `right-to-left` (common in Hebrew, Arabic, and East Asian texts), Mirador arranges the facing pages and navigation direction accordingly.
+- If the manifest declares a `viewingDirection` of `right-to-left`, Mirador arranges the facing pages and navigation direction accordingly.
 
-### 3. Gallery View
+### 3. Gallery View (Thumbnail Grid)
 
-**Gallery View** transforms the window into a visual grid of all canvases in the manifest:
+**Gallery View** transforms the window into a visual grid of all 370 canvases in the manuscript:
 
-![Gallery View - Thumbnail Grid](/img/user-guide/gallery-view.png)
+![Gallery View - Grid of Folio Thumbnails](/img/user-guide/nls-gallery-view.png)
 
-- Use Gallery view to scan rapidly through an entire book or manuscript to locate illustrations, blank pages, or specific sections.
-- Click any thumbnail in the gallery to immediately open that canvas in Single view.
-- A search query or filter applied in the sidebar highlights matching thumbnails across the gallery.
+- Use Gallery view to scan rapidly through an entire volume to find illuminations, chapter dividers, or specific folios.
+- Click any thumbnail in the gallery (such as Page 8 or 9) to immediately open that canvas in Single view.
 
 ---
 
-## Thumbnail Navigation
+## Thumbnail Filmstrip Navigation
 
-For continuous reading without sacrificing canvas space, Mirador allows you to toggle a persistent thumbnail filmstrip:
+For continuous reading without sacrificing canvas space, Mirador allows you to toggle a persistent thumbnail filmstrip along the bottom of the window:
 
-![Bottom Thumbnail Filmstrip](/img/user-guide/thumbnail-strip-bottom.png)
+![Bottom Thumbnail Filmstrip Showing Pages 8 and 9](/img/user-guide/nls-thumbnail-strip-bottom.png)
 
 ### Thumbnail Placement Options
 
-In the **Window views & thumbnail display** menu, you can configure thumbnail placement:
+In the **Window views & thumbnail display** menu (`⊞`), you can configure thumbnail placement:
 
 - **Off**: Hides thumbnails to maximize available screen area for the canvas.
 - **Bottom**: Displays a horizontal scrolling filmstrip along the bottom edge of the window.
@@ -91,9 +94,9 @@ In the **Window views & thumbnail display** menu, you can configure thumbnail pl
 
 At the bottom of the canvas viewport, the canvas navigation bar provides:
 
-- **Previous item (`<`)**: Steps backward to the previous canvas.
-- **Next item (`>`)**: Steps forward to the next canvas.
-- **Canvas Indicator (`1 of 614`)**: Displays the current position and total canvas count within the active sequence.
+- **Previous item (`<`)**: Steps backward to the previous canvas (e.g., from Page 9 back to Page 8).
+- **Next item (`>`)**: Steps forward to the next canvas (e.g., from Page 8 to Page 9).
+- **Canvas Indicator (`8 of 370 • 8`)**: Displays the current position and total canvas count within the active manuscript sequence.
 
 ---
 

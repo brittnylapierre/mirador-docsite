@@ -14,7 +14,7 @@ const meta: MetaRecord = {
   },
   "user-guide": {
     type: "page",
-    title: "User Guide",
+    title: "Using Mirador",
   },
   "install-config": {
     type: "page",

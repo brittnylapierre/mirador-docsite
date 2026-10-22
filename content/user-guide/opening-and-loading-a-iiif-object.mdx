@@ -7,7 +7,7 @@ description: Learn how to load IIIF manifests and collections into Mirador via U
 
 Mirador connects directly to any repository or digital library that implements the [IIIF Image](https://iiif.io/api/image/) and [IIIF Presentation](https://iiif.io/api/presentation/) specifications. You can load materials from national libraries, museums, university archives, and commercial digital collections.
 
-![Mirador Loaded with Manifest](/img/user-guide/manifest-single-view.png)
+![Mirador Loaded with 15th-Century Middle English Manuscript (National Library of Scotland)](/img/user-guide/nls-manifest-single-view.png)
 
 ---
 
@@ -15,30 +15,29 @@ Mirador connects directly to any repository or digital library that implements t
 
 The standard method for viewing an item from an external repository is using its **IIIF Manifest URL**:
 
-1. Locate the IIIF logo (`IIIF`) or copy the manifest URI from the providing institution's website (e.g., `https://iiif.wellcomecollection.org/presentation/v2/b18031511`).
+1. Locate the IIIF logo (`IIIF`) or copy the manifest URI from the providing institution's website (e.g., National Library of Scotland's `https://view.nls.uk/manifest/1334/7515/133475158/manifest.json`).
 2. In Mirador, click the **Add Resource** button (`＋`) in the upper-left corner of the workspace toolbar.
 3. In the **Add Resource Catalog** modal, locate the text input at the top:
 
-![Add Resource Catalog](/img/user-guide/add-resource-catalog.png)
+![Add Resource Catalog](/img/user-guide/nls-add-resource-catalog.png)
 
 4. Paste the IIIF manifest URL into the field and click **Add**.
 5. Mirador fetches the manifest, validates its JSON-LD structure, adds it to your catalog, and opens it into an active window.
 
 > [!TIP]
 > **Using URL Parameters**: You can also launch Mirador with a resource pre-loaded by appending the `?iiif-content=` parameter to the viewer URL, for example:
-> `https://projectmirador.org/embed/?iiif-content=https://iiif.wellcomecollection.org/presentation/v2/b18031511`
+> `https://projectmirador.org/embed/?iiif-content=https://view.nls.uk/manifest/1334/7515/133475158/manifest.json`
 
 ---
 
 ## 2. Loading a IIIF Collection
 
-When loading a multi-volume book, archival fond, or curated exhibition set, the URL points to a **IIIF Collection** rather than a single manifest:
+When loading a multi-volume book, archival fond, or themed manuscript set, the URL points to a **IIIF Collection** rather than a single manifest:
 
-![Collection Initial Window](/img/user-guide/collection-overview.png)
+![NLS Middle English Collection Window](/img/user-guide/nls-collection-overview.png)
 
-1. When a collection loads, Mirador opens a placeholder window showing the collection title, catalog summary, and a **SHOW COLLECTION** button.
-2. Click **SHOW COLLECTION** to open the **Collection Browser Dialog**.
-3. Select any child manifest (such as *Volume 1*) to begin reading.
+1. When a collection loads (such as NLS collection `https://view.nls.uk/collections/1334/7486/133474867.json`), Mirador opens an initial window displaying the collection title, catalog summary, and a **SHOW COLLECTION** prompt.
+2. Open the **Add Resource** catalog or click the collection to select any of the individual manuscripts (such as *Mandeville's travels*).
 
 For comprehensive details on navigating hierarchical sets, see [Using Collections and Table of Contents](/user-guide/using-collections-and-table-of-contents).
 
@@ -60,10 +59,10 @@ Before working with complex materials, it is helpful to understand the core IIIF
 
 | Object | Definition | Example |
 | :--- | :--- | :--- |
-| **Manifest** | The overall digital package representing one physical or conceptual item. Contains metadata, licenses, and sequences. | *The Biological Basis of Medicine, Vol. 1* |
-| **Sequence** | An ordered linear arrangement of canvases representing the reading order. | *Standard page order (front-to-back)* |
-| **Canvas** | A 2D surface representing an individual page, sheet, or view. | *Page 42, Folio 12r, or Plate III* |
-| **Image Service** | The underlying deep-zoom tile server powering the OpenSeadragon renderer. | *IIIF Image API Level 2 Endpoint* |
+| **Manifest** | The overall digital package representing one physical or conceptual item. Contains metadata, licenses, and sequences. | *Adv.MS.19.1.11 (Mandeville's Travels)* |
+| **Sequence** | An ordered linear arrangement of canvases representing the reading order. | *Standard folio order (fol. 1r - fol. 185v)* |
+| **Canvas** | A 2D surface representing an individual page, sheet, or view. | *Page 8 or Page 9* |
+| **Image Service** | The underlying deep-zoom tile server powering the OpenSeadragon renderer. | *NLS IIIF Image API Endpoint* |
 
 ---
 

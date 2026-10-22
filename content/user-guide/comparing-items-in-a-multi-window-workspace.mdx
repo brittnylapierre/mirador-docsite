@@ -7,7 +7,9 @@ description: Compare multiple IIIF manuscripts, editions, and images side by sid
 
 The primary design principle behind Mirador is **comparative research**. Unlike single-image viewers, Mirador provides a flexible multi-window workspace that allows scholars, conservators, and researchers to place multiple digital objects side by side, zoom in on corresponding details, and cross-reference metadata in parallel.
 
-![Multi-Window Workspace Comparison](/img/user-guide/multi-window-side-by-side.png)
+Below, Page 8 of *Mandeville's Travels* ([Adv.MS.19.1.11](https://view.nls.uk/manifest/1334/7515/133475158/manifest.json)) is compared side by side with the second manuscript from the NLS Middle English collection, *Romance and religion* ([Adv.MS.19.3.1](https://view.nls.uk/manifest/1336/8006/133680060/manifest.json)):
+
+![Multi-Window Workspace Comparing Two NLS Middle English Manuscripts Side by Side](/img/user-guide/nls-multi-window-side-by-side.png)
 
 ---
 
@@ -18,12 +20,12 @@ To open multiple objects in your workspace:
 1. Click the **Add Resource** button (`＋`) in the upper-left corner of the workspace toolbar.
 2. The **Resource Catalog** opens as a dialog overlay:
 
-![Add Resource Catalog](/img/user-guide/add-resource-catalog.png)
+![Add Resource Catalog](/img/user-guide/nls-add-resource-catalog.png)
 
 3. From this dialog, you can:
-   - **Select Preloaded Manifests**: Click any existing manifest or collection loaded in the catalog (e.g., selecting *Volume 2* alongside *Volume 1*).
-   - **Add New Manifest by URL**: Paste the URL of any valid IIIF Presentation Manifest or Collection into the text input and click **Add**.
-4. Once selected, Mirador automatically tiles the new window beside your existing windows.
+   - **Select Preloaded Manifests**: Click any existing manifest or collection loaded in the catalog.
+   - **Add New Manifest by URL**: Paste the URL of any valid IIIF Presentation Manifest (e.g., `https://view.nls.uk/manifest/1336/8006/133680060/manifest.json`) into the text input and click **Add**.
+4. Once selected, Mirador automatically tiles the new window beside your existing window.
 
 ---
 
@@ -31,7 +33,7 @@ To open multiple objects in your workspace:
 
 Mirador offers two distinct workspace layout paradigms depending on your research needs:
 
-![Select Workspace Type Menu](/img/user-guide/workspace-type-menu.png)
+![Select Workspace Type Menu](/img/user-guide/nls-workspace-type-menu.png)
 
 To switch between layout modes, click the **Workspace settings** icon (`⚙`) in the top workspace toolbar and choose **Select workspace type**:
 
@@ -41,7 +43,7 @@ To switch between layout modes, click the **Workspace settings** icon (`⚙`) in
 
 - Windows automatically resize to share the screen equally (e.g., 50/50 split for two windows, 2x2 grid for four windows).
 - Dividers between windows can be dragged horizontally or vertically to adjust the proportions of each pane.
-- Perfect for side-by-side comparative inspection of two book volumes, historical editions, or infrared vs. visible light photography.
+- Perfect for side-by-side comparative inspection of two book volumes, historical editions, or paleographic hand comparisons.
 
 ### 2. Elastic Mode (Freeform Canvas)
 
@@ -65,7 +67,7 @@ When you need to focus on a single object in full detail without closing your ot
 1. Click the **Maximize window** button (`□`) in the window's top-right header.
 2. The selected window expands to fill the entire workspace viewport:
 
-![Window Maximized](/img/user-guide/window-maximized.png)
+![Window Maximized](/img/user-guide/nls-window-maximized.png)
 
 3. To return to your multi-window layout, click the **Restore window** button (`⧉`). All other windows return to their previous positions and zoom states.
 
@@ -76,7 +78,7 @@ When you finish inspecting an object:
 1. Click the **Close window** button (`✕`) in the upper-right corner of the window.
 2. Mirador closes the window and automatically redistributes the remaining workspace area among the remaining windows:
 
-![Window Closed](/img/user-guide/window-closed.png)
+![Window Closed](/img/user-guide/nls-window-closed.png)
 
 ---
 
@@ -84,7 +86,7 @@ When you finish inspecting an object:
 
 Mirador allows you to preserve your multi-window comparative setup:
 
-![Workspace Options Menu](/img/user-guide/workspace-options-menu.png)
+![Workspace Options Menu](/img/user-guide/nls-workspace-options-menu.png)
 
 1. Click the **Workspace options** button (`⋮`) in the workspace control panel.
 2. Choose **Export workspace** to download or copy a JSON configuration string of your exact layout, open manifests, canvas indices, and viewport coordinates.

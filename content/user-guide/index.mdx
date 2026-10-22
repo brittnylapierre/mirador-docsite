@@ -1,13 +1,13 @@
 ---
-title: Mirador User Guide Overview
+title: Using Mirador Overview
 description: Learn how to navigate, inspect, compare, and manage IIIF digital objects in Mirador.
 ---
 
-# User Guide Overview
+# Using Mirador Overview
 
 Mirador is an open-source, multi-window image viewing workspace tailored for cultural heritage, academic research, and deep visual inspection. It natively supports the [International Image Interoperability Framework (IIIF)](https://iiif.io/) specifications, allowing you to seamlessly load, navigate, and compare high-resolution digital objects from archives, libraries, and museums worldwide.
 
-![Mirador Workspace Anatomy](/img/user-guide/manifest-single-view.png)
+![Mirador Workspace Anatomy with 15th-Century Middle English Manuscript (National Library of Scotland)](/img/user-guide/nls-manifest-single-view.png)
 
 ## Core Concepts
 
@@ -17,9 +17,9 @@ Understanding Mirador's architectural hierarchy makes navigating the viewer intu
 | :--- | :--- |
 | **Workspace** | The root container managing open windows, layouts, global controls, and theme settings. |
 | **Window** | An independent viewport hosting a single IIIF Manifest or Collection. Each window has its own navigation, view modes, and companion sidebar. |
-| **Manifest** | A IIIF resource package describing a physical object (book, scroll, artwork, photograph) and its metadata. |
-| **Collection** | A structured grouping of related manifests or sub-collections (e.g., multi-volume sets, archival series). |
-| **Canvas** | A virtual 2D surface representing a single page, sheet, or image layer. |
+| **Manifest** | A IIIF resource package describing a physical object (such as NLS MS Adv.MS.19.1.11, *Mandeville's Travels*) and its metadata. |
+| **Collection** | A structured grouping of related manifests or sub-collections (e.g., *Manuscripts containing Middle English texts*). |
+| **Canvas** | A virtual 2D surface representing a single page, sheet, or folio (e.g., Page 8 or Page 9). |
 | **Companion Window (Sidebar)** | The contextual side panel displaying metadata, table of contents, annotations, rights, and search. |
 
 ---
@@ -32,30 +32,30 @@ Mirador's interface consists of three primary areas:
 ┌────────────────────────────────────────────────────────────────────────┐
 │ [＋ Add Resource]   [Window Count: 1]    [Settings ⚙]  [Options ⋮] [⛶] │ <-- Workspace Control Panel
 ├────────────────────────────────────────────────────────────────────────┤
-│ ┌─ [Window: Volume 1] ───────────────────────────────────────────────┐ │
-│ │ [Sidebar ☰]   The biological basis of medicine    [Views ⊞] [□] [✕]│ │ <-- Window Header
+│ ┌─ [Window: Mandeville's travels - Adv.MS.19.1.11] ──────────────────┐ │
+│ │ [Sidebar ☰]   15th-century English manuscript     [Views ⊞] [□] [✕]│ │ <-- Window Header
 │ ├───────────────────┬────────────────────────────────────────────────┤ │
 │ │ Companion Sidebar │ Canvas Viewport (Deep Zoom)                    │ │
 │ │ • Information     │                                                │ │
 │ │ • Rights          │                     [ + ]                      │ │
 │ │ • Index (TOC)     │                     [ - ]                      │ │
 │ │ • Annotations     │                     [ ⌂ ]                      │ │
-│ │ • Search          │                  <  1 of 614  >                │ │
+│ │ • Search          │                  <  8 of 370  >                │ │
 │ ├───────────────────┴────────────────────────────────────────────────┤ │
-│ │ Bottom Thumbnail Filmstrip [ 1 ] [ 2 ] [ 3 ] [ 4 ] [ 5 ] ...       │ │
+│ │ Bottom Thumbnail Filmstrip [ 7 ] [ 8 ] [ 9 ] [ 10 ] ...             │ │
 │ └────────────────────────────────────────────────────────────────────┘ │
 └────────────────────────────────────────────────────────────────────────┘
 ```
 
 1. **Workspace Control Panel (Top Bar)**: Global actions including adding resources (`+`), jumping between windows, workspace settings (theme, language, workspace type), session export/import, and fullscreen toggle.
 2. **Window Control Bar**: Window-specific controls including sidebar toggle, manifest title, view mode selector, window maximize/restore, and close button.
-3. **Canvas Viewport**: Powered by OpenSeadragon for smooth deep zooming, panning, and canvas stepping.
+3. **Canvas Viewport**: Powered by OpenSeadragon for smooth deep zooming, panning, and canvas stepping across high-resolution manuscript scans.
 4. **Companion Sidebar**: Five specialized tabs providing metadata, rights statements, table of contents, annotations, and full-text search.
-5. **Thumbnail Strip / Gallery**: Filmstrip navigation allowing you to quickly scan through pages and jump to any canvas.
+5. **Thumbnail Strip / Gallery**: Filmstrip navigation allowing you to quickly scan through pages and jump to any canvas (such as Pages 8 and 9).
 
 ---
 
-## User Guide Topics
+## Guide Topics
 
 Explore the detailed guides below to master each aspect of Mirador:
 

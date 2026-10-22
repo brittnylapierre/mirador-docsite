@@ -1,11 +1,11 @@
 ---
 title: Using Collections and Table of Contents
-description: Learn how to navigate multi-volume works, archival series, and structured tables of contents in Mirador.
+description: Learn how to navigate multi-volume works, archival series, and structured tables of contents in Mirador using NLS collections.
 ---
 
 # Using Collections and Table of Contents
 
-Many historical, academic, and archival digital objects are too extensive to fit into a single IIIF manifest. Institutions organize these works into **IIIF Collections**—hierarchical groupings that contain multiple manifests or sub-collections. Examples include multi-volume encyclopedias, periodical runs, archival boxes, and exhibition sets.
+Many historical, academic, and archival digital objects are too extensive to fit into a single IIIF manifest. Institutions organize these works into **IIIF Collections**—hierarchical groupings that contain multiple manifests or sub-collections. Examples include multi-volume encyclopedias, periodical runs, archival series, and themed manuscript collections.
 
 Mirador provides first-class support for browsing IIIF Collections and navigating internal Table of Contents (Ranges) within manifests.
 
@@ -13,42 +13,45 @@ Mirador provides first-class support for browsing IIIF Collections and navigatin
 
 ## Browsing a IIIF Collection
 
-When you open a IIIF Collection in Mirador (such as the *Biological Basis of Medicine* from the Wellcome Collection), the initial window displays the collection-level metadata, summary, and an invitation to browse its contents:
+When you open a IIIF Collection in Mirador (such as the National Library of Scotland's [*Manuscripts containing Middle English texts*](https://view.nls.uk/collections/1334/7486/133474867.json)), the initial window displays the collection-level metadata, summary, and an invitation to browse its contents:
 
-![Collection Overview Window](/img/user-guide/collection-overview.png)
+![NLS Collection Overview Window](/img/user-guide/nls-collection-overview.png)
 
-### Opening the Collection Browser Dialog
+### The NLS Middle English Collection Hierarchy
 
-To explore the manifests in a collection:
+This collection from the National Library of Scotland contains three major Middle English codices:
 
-1. Click the **SHOW COLLECTION** button in the center of the window or the collection banner.
-2. Mirador opens the **Collection Browser Dialog**, listing every volume, part, or child collection declared by the publisher:
+1. **Mandeville's travels and other texts**: Includes *Liber maundevyle*, *Sir Cleges*, and *De regimine principum* by Thomas Hoccleve ([Manifest URI](https://view.nls.uk/manifest/1334/7515/133475158/manifest.json)).
+2. **Romance and religion**: A collection of romances and religious material, mostly in verse, written in the North Midlands by Richard Heeg ([Manifest URI](https://view.nls.uk/manifest/1336/8006/133680060/manifest.json)).
+3. **John of Grimestone**: The preaching-book of a Franciscan friar from Norfolk, written in 1372 ([Manifest URI](https://view.nls.uk/manifest/1336/8036/133680362/manifest.json)).
 
-![Collection Browser Dialog](/img/user-guide/collection-browse-dialog.png)
+### Opening the Collection in the Resource Catalog
 
-3. Review the items listed. In this Wellcome Collection example, six individual volumes are available (*Volume 1* through *Volume 6*).
-4. Click any volume to load its manifest directly into the active viewing window.
-5. If the collection contains sub-collections (e.g., *Series* > *Sub-series* > *Files*), you can drill down through the hierarchy. Breadcrumbs at the top of the dialog allow you to navigate back up to parent collections.
+To browse and select items from a loaded collection:
 
-> [!TIP]
-> You can also browse collections later by clicking the **Add Resource** (`+`) button in the top-left workspace toolbar, which lists both individual manifests and parent collections.
+1. Click the **Add Resource** (`＋`) button in the top-left workspace toolbar.
+2. The **Resource Catalog** displays all loaded manifests and parent collections:
+
+![Add Resource Catalog with NLS Collection](/img/user-guide/nls-add-resource-catalog.png)
+
+3. Click on the collection entry (*Manuscripts containing Middle English texts*) to expand its constituent manuscripts.
+4. Click any manuscript (such as *Mandeville's travels*) to open it in an active window.
 
 ---
 
 ## Navigating Manifest Structure & Table of Contents
 
-Once an individual manifest is opened, you can navigate its structural organization (chapters, sections, appendices) via the **Index** companion sidebar.
+Once an individual manuscript is opened, you can navigate its structural organization (folios, chapters, sections) via the **Index** companion sidebar.
 
-![Sidebar Index and Table of Contents](/img/user-guide/sidebar-index.png)
+![Sidebar Index Showing Page 8 Selected](/img/user-guide/nls-sidebar-index.png)
 
 ### Accessing the Index Panel
 
 1. Click the **Toggle sidebar** button (`☰`) in the top-left corner of the window.
 2. Select the **Index** tab (represented by the book/list icon) in the sidebar tab bar.
-3. The Index panel displays the logical structure of the object:
-   - **Canvases list**: A sequential list of all pages in the manifest with labels (e.g., *Title Page*, *p. 1*, *Plate IV*).
-   - **Table of Contents (Ranges)**: When the manifest publisher provides a structural range hierarchy, collapsible chapter and section headings appear in a tree structure.
-4. Click any entry in the Index to immediately jump the viewer to that specific canvas.
+3. The Index panel displays the sequential list of all 370 folios in the manuscript.
+4. Scroll through the list and click any folio (such as **Page 8** or **Page 9**) to jump the viewer directly to that canvas.
+5. In manifests that declare structural ranges (TOC), nested chapter and section headings appear in a collapsible tree structure.
 
 ---
 
@@ -57,28 +60,28 @@ Once an individual manifest is opened, you can navigate its structural organizat
 To navigate effectively, keep the following relationships in mind:
 
 ```
-IIIF Collection (e.g., Multi-volume work: "The Biological Basis of Medicine")
+IIIF Collection (NLS "Manuscripts containing Middle English texts")
  │
- ├── Manifest: Volume 1 (614 pages)
- │    ├── Canvas 1: Front cover
- │    ├── Canvas 2: Half-title page
- │    ├── Canvas 3: Table of contents
- │    └── Canvas 4...614: Content pages
+ ├── Manifest: Mandeville's travels (Adv.MS.19.1.11 - 370 folios)
+ │    ├── Canvas 1: Front flyleaf
+ │    ├── Canvas 7: Preceding text
+ │    ├── Canvas 8: Page 8 (Folio start)
+ │    ├── Canvas 9: Page 9 (Facing folio)
+ │    └── Canvas 10...370: Remaining folios
  │
- ├── Manifest: Volume 2
- ├── Manifest: Volume 3
- └── ...
+ ├── Manifest: Romance and religion (Adv.MS.19.3.1 - 482 folios)
+ └── Manifest: John of Grimestone (Adv.MS.18.7.21)
 ```
 
 - **Collection**: Groups multiple manifests or sub-collections together.
 - **Manifest**: Represents one complete physical or conceptual object.
 - **Canvas**: The virtual display coordinate space for an individual page, sheet, or view.
-- **Range / Table of Contents**: A curated subset or hierarchy of canvases representing logical divisions (chapters, articles, or sections).
+- **Range / Table of Contents**: A curated subset or hierarchy of canvases representing logical divisions.
 
 ---
 
 ## Best Practices for Large Collections
 
-- **Use the Index for Deep Navigation**: In a 600-page book or manuscript, scrolling page by page is inefficient. Use the Index tab to jump straight to specific chapters or plates.
-- **Combine with Multi-Window Comparison**: When examining multi-volume sets, open Volume 1 in one window and Volume 2 in a second window to compare editions, indexes, or bibliographies side by side.
+- **Use the Index for Deep Navigation**: In a 370-page manuscript, scrolling page by page can be slow. Use the Index tab to jump straight to specific folios (e.g. Page 8).
+- **Combine with Multi-Window Comparison**: Open two related codices from the collection side by side (e.g., *Mandeville's travels* in Window 1 and *Romance and religion* in Window 2) to compare scribal hands and language dialects.
 - **Verify Manifest Compliance**: If a collection fails to render or display its hierarchy, consult the [Mirador IIIF Support Matrix](/iiif-support) to verify that the collection uses valid IIIF Presentation API v2 or v3 specifications.
