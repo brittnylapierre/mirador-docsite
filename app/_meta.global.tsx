@@ -20,6 +20,13 @@ const meta: MetaRecord = {
     type: "page",
     title: "Install & Config Guide",
   },
+  "iiif-support": {
+    type: "page",
+    title: "IIIF Support Matrix",
+    theme: {
+      toc: false,
+    },
+  },
   demo: {
     title: "Live Demo",
     href: "https://projectmirador.org/demo/",

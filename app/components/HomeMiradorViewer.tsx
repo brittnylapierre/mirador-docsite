@@ -59,9 +59,10 @@ export default function HomeMiradorViewer() {
       const viewer = viewerRef.current;
       viewerRef.current = null;
 
-      if (viewer?.unmount) {
+      const unmount = viewer?.unmount;
+      if (unmount) {
         window.setTimeout(() => {
-          viewer.unmount();
+          unmount();
         }, 0);
       }
     };

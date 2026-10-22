@@ -1,32 +1,58 @@
-# Searching and finding content
+---
+title: Searching and Finding Content
+description: Execute full-text in-manifest search and navigate to matching canvas hits in Mirador.
+---
 
-Mirador supports IIIF search workflows when the manifest provides the necessary search service.
+# Searching and Finding Content
 
-## Searching within a manifest
+For digitized books, newspapers, letters, and archival manuscripts that include optical character recognition (OCR) or manual transcriptions, Mirador implements the [IIIF Content Search API](https://iiif.io/api/search/1.0/). This enables researchers to search for terms across hundreds of pages and jump immediately to exact word occurrences.
 
-- Open the search panel to search for text or terms in the resource.
-- Search results depend on a valid IIIF Content Search service being present in the manifest.
-- If no search service is available, the feature will not appear or will not return results.
+![Sidebar Search Panel](/img/user-guide/sidebar-search.png)
 
-## Reading results
+---
 
-- Review the search result list in the sidebar.
-- Understand which canvas or segment contains the match and how it is categorized.
-- Results often include snippet text or metadata that helps interpret the match.
+## How to Search Within a Manifest
 
-## Jumping to matching canvases
+When a manifest declares an active IIIF Content Search service:
 
-- Select a result to jump directly to the matching canvas or region.
-- Use result navigation to move quickly through a long object or text-heavy resource.
-- This workflow saves time compared with manual page-by-page scanning.
+1. Open the **Companion Sidebar** by clicking the sidebar toggle button (`☰`) in the window header.
+2. Click the **Search** tab (represented by the magnifying glass icon).
+3. In the search input field, type your query keywords (e.g., `"blood"` or `"cells"`).
+4. Press `Enter` or click the search icon.
+5. Mirador queries the remote IIIF Search service and displays the results list in the sidebar.
 
-## Using search-driven navigation
+---
 
-- Search can act as a structured path through the resource.
-- Use it to locate specific references, names, dates, or terms.
-- This is especially helpful for manuscripts, archival materials, and richly indexed resources.
+## Reviewing Search Results
 
-## Good practice
+The Search panel organizes hits logically by page and occurrence:
 
-- Confirm the manifest includes a searchable text layer or content search service.
-- Use the sidebar results to understand whether the match is on the current page or elsewhere in the resource.
+- **Hit Snippets**: Results display contextual text snippets surrounding your search terms to help you evaluate relevance before opening the page.
+- **Canvas Target**: Each result indicates the specific canvas label and page number where the match occurs.
+- **Visual Overlays**: When a search result is selected, Mirador navigates the canvas directly to that page and draws a highlighted bounding box over the exact word coordinates (via IIIF fragment coordinates `xywh`).
+
+---
+
+## Navigating Through Results
+
+- **Click to Jump**: Click any result in the sidebar list to center the viewer onto that canvas and zoom into the matching text segment.
+- **Sequential Stepping**: Use result forward and back arrows to step through occurrences in sequence across the work.
+- **Combining with Gallery View**: Switch to **Gallery View** (`⊞`) while a search is active to see visual indicators on thumbnails of every page that contains matching search terms.
+
+---
+
+## Autocomplete Suggestions
+
+If the providing institution's search endpoint includes an autocomplete service:
+
+- As you begin typing in the search box, Mirador displays a dropdown menu of matching terms and phrases indexed within the document.
+- Click any suggested term to execute the search immediately.
+
+---
+
+## Troubleshooting Search
+
+- **Why is the Search tab missing?**
+  The Search tab only appears when the loaded IIIF manifest declares a `service` block conforming to the IIIF Content Search API (`http://iiif.io/api/search/1/search` or `http://iiif.io/api/search/0/search`). If the digitized object does not have OCR or an active search service configured by the publisher, search is unavailable.
+- **Search API v2 Support**:
+  Mirador natively parses Content Search API v1 and v0 services. Review the [Mirador IIIF Support Matrix](/iiif-support) for details on search protocol compatibility.

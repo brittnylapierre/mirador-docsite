@@ -1,39 +1,89 @@
-# Using the side panels and metadata
+---
+title: Using the Side Panels and Metadata
+description: Explore Mirador's companion sidebar tabs for descriptive metadata, rights, table of contents, annotations, and search.
+---
 
-The sidebar in Mirador provides contextual information and navigation tools for the active object.
+# Using the Side Panels and Metadata
 
-## Info panel
+Every viewing window in Mirador includes a collapsible **Companion Sidebar** that surfaces contextual metadata, structural indices, commentary, and rights statements embedded in the IIIF resource.
 
-- Review the descriptive metadata for the current object.
-- Find labels, summaries, and general information about the resource.
-- Use the info panel when working with catalog and collection-level descriptions.
+To toggle the companion sidebar, click the **Show sidebar** / **Toggle sidebar** button (`☰`) in the top-left corner of the window.
 
-## Attribution panel
+---
 
-- Review rights statements, provider information, and attribution details.
-- Confirm who owns or provides the resource and how it may be reused.
-- Use attribution information when evaluating licensing or citation requirements.
+## 1. Information Panel
 
-## Annotations panel
+The **Information** tab (represented by the `ⓘ` icon) presents cataloging and descriptive metadata for both the overall manifest and the currently active canvas:
 
-- Open the annotations panel to review annotation sets and visible comments.
-- Understand how annotation layers appear and which sets are in use.
-- Use filters to narrow the view to the most relevant annotations.
+![Sidebar Information Panel](/img/user-guide/sidebar-info.png)
 
-## Search panel
+### Key Sections:
 
-- Open the search panel to look for terms across the manifest or dataset.
-- Review search results and jump to relevant canvases or regions.
-- Search-driven navigation is especially useful with long manuscripts or structured objects.
+- **Manifest Title & Summary**: Displays the formal title, alternate titles, dates, and descriptive summaries provided by the publishing institution.
+- **Metadata Key-Value Pairs**: Formatted list of bibliographic and archival fields, including:
+  - *Author / Creator*
+  - *Publication Date & Place*
+  - *Publisher / Holding Institution*
+  - *Physical Description & Dimensions*
+  - *Classification / Call Numbers*
+- **Canvas Metadata**: Specific metadata applicable only to the active page or sheet (e.g., specific folio numbers, transcription notes, or dimensions).
+- **Related Links**: Direct URLs to catalog records, institutional holding pages, or alternative downloadable formats (PDF, TEI/XML).
 
-## Layers panel
+---
 
-- Switch between image layers or alternative views when available.
-- Inspect layer choices for manuscripts, maps, or complex digital objects.
-- Use the layers panel to understand which alternative image service is active.
+## 2. Rights and Attribution Panel
 
-## Understanding panel controls
+The **Rights** tab (represented by the copyright/shield icon) provides legal and licensing information governing how the resource may be used, shared, and cited:
 
-- Each panel may include actions for expand, collapse, filter, or alternate view.
-- Panel controls help users focus on metadata or navigation without losing the image context.
-- Learn the panel behavior of a resource before relying on it for repeated workflows.
+![Sidebar Rights Panel](/img/user-guide/sidebar-rights.png)
+
+### What You Will Find:
+
+- **Attribution & Holding Institution**: Acknowledgment of the library, archive, or museum providing the digital surrogate (e.g., *Wellcome Collection, London*).
+- **Rights Statement & License**: Standardized RightsStatements.org or Creative Commons URI licenses (e.g., *Public Domain Mark 1.0*, *CC-BY 4.0*, *In Copyright*).
+- **Institutional Logo**: Digital watermark or emblem representing the repository.
+
+---
+
+## 3. Index Panel (Table of Contents & Canvases)
+
+The **Index** tab (represented by the book/list icon) displays the navigational structure of the resource:
+
+![Sidebar Index Panel](/img/user-guide/sidebar-index.png)
+
+- **Canvas List**: A scrollable vertical list of every canvas in the sequence with its page label.
+- **Table of Contents (Ranges)**: When the manifest defines structural ranges, nested chapter titles appear in a collapsible hierarchy.
+- Clicking any canvas or chapter immediately scrolls and navigates the main viewer to that location.
+
+---
+
+## 4. Annotations Panel
+
+The **Annotations** tab (represented by the speech bubble icon) manages all annotations attached to the active canvas:
+
+![Sidebar Annotations Panel](/img/user-guide/sidebar-annotations.png)
+
+- Lists all annotations targeting the visible page or specific regions within it.
+- Allows researchers to inspect transcription text, historical commentary, or object tags.
+- Toggles visibility of annotation bounding boxes and SVG highlight polygons on the canvas.
+
+---
+
+## 5. Content Search Panel
+
+The **Search** tab (represented by the magnifying glass icon) enables full-text querying across the manifest when a IIIF Content Search service is available:
+
+![Sidebar Search Panel](/img/user-guide/sidebar-search.png)
+
+- Input search keywords to query OCR transcripts or transcribed text layers.
+- View matching text snippets with direct links to the exact canvas and coordinate regions where the terms appear.
+
+---
+
+## Companion Window Controls
+
+The companion sidebar is designed to fit your screen and workflow:
+
+- **Collapse / Expand**: Click the sidebar toggle icon (`☰`) at any time to open or hide the panel, reclaiming full window width for image viewing.
+- **Separate Panel**: In multi-window or expanded layouts, sidebars can be docked or opened as separate sub-panels to keep metadata visible alongside multiple comparisons.
+- **Responsive Stacking**: On narrower screens or when multiple windows are tiled, side panels automatically adjust their width and stack gracefully.

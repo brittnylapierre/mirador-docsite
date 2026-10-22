@@ -1,35 +1,111 @@
-# Basic image navigation
+---
+title: Basic Image Navigation
+description: Master deep-zooming, panning, view modes, and thumbnail navigation in Mirador.
+---
 
-This page covers the core actions used to inspect an image in Mirador.
+# Basic Image Navigation
 
-## Zoom, pan, and rotate
+Mirador utilizes [OpenSeadragon](https://openseadragon.github.io/) to provide deep-zoom capabilities across high-resolution IIIF images. Whether inspecting gigapixel art scans, delicate manuscript handwriting, or multi-page books, Mirador gives you full control over how canvases are displayed and navigated.
 
-- Use zoom controls to inspect details and then reset to the default view.
-- Pan around the image to move across the canvas without changing the zoom level.
-- Rotate the image when the resource or viewer supports it and the image orientation requires adjustment.
+![Mirador Single Canvas View](/img/user-guide/manifest-single-view.png)
 
-## Using thumbnails and canvas navigation
+---
 
-- Move between canvases using the thumbnail strip or related navigation controls.
-- Use a thumbnail view to scan the resource quickly and jump to specific pages or images.
-- The current canvas and thumbnail selection should stay in sync.
+## Zoom, Pan, and Inspect Details
 
-## Switching between canvases and sequences
+### Zooming
 
-- Move forward and backward through the resource using the canvas controls.
-- If a manifest contains multiple sequences, switch between them when needed.
-- Sequence navigation is especially useful for manuscripts, multi-part documents, or alternative reading orders.
+You can adjust the zoom level using multiple interaction methods:
 
-## Using single, book, scroll, and gallery views
+- **Floating Zoom Controls**: Use the overlay controls positioned in the canvas viewport:
+  - **`+` (Zoom in)**: Increases magnification smoothly.
+  - **`-` (Zoom out)**: Decreases magnification.
+  - **`⌂` (Reset zoom)**: Resets the canvas to fit perfectly within the window bounds.
+- **Mouse Wheel / Trackpad**: Scroll up or down to zoom continuously towards the cursor position.
+- **Keyboard Shortcuts**:
+  - `+` or `=` to zoom in.
+  - `-` to zoom out.
+  - `0` to reset zoom to default.
+- **Double-Click**: Double-click on any part of the canvas to zoom in directly onto that region.
 
-- Single view: best for focused reading of one canvas at a time.
-- Book view: useful for facing pages or spread-based structures.
-- Scroll view: useful for continuous reading of long material.
-- Gallery view: best for browsing many thumbnail images quickly.
+![Zoomed-in Detail Inspection](/img/user-guide/canvas-zoomed.png)
 
-## Practical workflow
+### Panning
 
-1. Open a manifest.
-2. Choose the best display mode for the material.
-3. Zoom and pan to study details.
-4. Use thumbnails or canvas navigation to move through the object.
+To explore different areas of a high-resolution canvas while zoomed in:
+
+- **Click and Drag**: Click anywhere on the canvas and drag to pan across the image.
+- **Arrow Keys**: Use `Up`, `Down`, `Left`, and `Right` arrow keys to pan incrementally.
+
+---
+
+## Window View Modes
+
+Mirador supports three distinct viewing modes tailored to different types of reading and research workflows:
+
+![Window Views and Thumbnail Menu](/img/user-guide/window-views-menu.png)
+
+To switch view modes, click the **Window views & thumbnail display** button (`⊞`) in the top-right toolbar of the window:
+
+### 1. Single View
+
+**Single View** (default) renders one canvas at a time centered within the viewport. It is ideal for close visual analysis of individual artworks, maps, photographs, and focused manuscript transcription.
+
+### 2. Book View (Two-Up Facing Pages)
+
+**Book View** renders adjacent canvases side by side as open spreads, mimicking the physical experience of reading a printed book or bound codex.
+
+![Book View - Two-Up Facing Pages](/img/user-guide/book-view.png)
+
+- Mirador automatically accounts for page sequencing and cover pages.
+- When navigating forward or backward, two pages turn simultaneously.
+- If the manifest declares a `viewingDirection` of `right-to-left` (common in Hebrew, Arabic, and East Asian texts), Mirador arranges the facing pages and navigation direction accordingly.
+
+### 3. Gallery View
+
+**Gallery View** transforms the window into a visual grid of all canvases in the manifest:
+
+![Gallery View - Thumbnail Grid](/img/user-guide/gallery-view.png)
+
+- Use Gallery view to scan rapidly through an entire book or manuscript to locate illustrations, blank pages, or specific sections.
+- Click any thumbnail in the gallery to immediately open that canvas in Single view.
+- A search query or filter applied in the sidebar highlights matching thumbnails across the gallery.
+
+---
+
+## Thumbnail Navigation
+
+For continuous reading without sacrificing canvas space, Mirador allows you to toggle a persistent thumbnail filmstrip:
+
+![Bottom Thumbnail Filmstrip](/img/user-guide/thumbnail-strip-bottom.png)
+
+### Thumbnail Placement Options
+
+In the **Window views & thumbnail display** menu, you can configure thumbnail placement:
+
+- **Off**: Hides thumbnails to maximize available screen area for the canvas.
+- **Bottom**: Displays a horizontal scrolling filmstrip along the bottom edge of the window.
+- **Right**: Displays a vertical scrolling thumbnail bar along the right edge of the window.
+
+### Stepping Between Canvases
+
+At the bottom of the canvas viewport, the canvas navigation bar provides:
+
+- **Previous item (`<`)**: Steps backward to the previous canvas.
+- **Next item (`>`)**: Steps forward to the next canvas.
+- **Canvas Indicator (`1 of 614`)**: Displays the current position and total canvas count within the active sequence.
+
+---
+
+## Quick Reference: Navigation Shortcuts
+
+| Action | Control / Shortcut |
+| :--- | :--- |
+| **Zoom In** | `+` / Scroll Up / Double-click |
+| **Zoom Out** | `-` / Scroll Down |
+| **Reset Zoom** | `0` or Home button (`⌂`) |
+| **Pan** | Click + Drag / Arrow keys |
+| **Next Canvas** | Right Arrow (`>`) |
+| **Previous Canvas** | Left Arrow (`<`) |
+| **Toggle Sidebar** | Click `☰` in window header |
+| **Switch Views** | Click `⊞` > Single / Book / Gallery |

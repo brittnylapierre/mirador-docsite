@@ -1,28 +1,75 @@
-# Errors and troubleshooting
+---
+title: Errors and Troubleshooting
+description: Diagnose and resolve common issues with manifest loading, CORS errors, broken tiles, and network failures in Mirador.
+---
 
-This page covers common problems users may encounter while loading or viewing IIIF resources in Mirador.
+# Errors and Troubleshooting
 
-## When an image fails to load
+When Mirador cannot display a resource or render tiles correctly, the problem almost always stems from network restrictions, CORS headers, invalid JSON structure, or server permission issues.
 
-- Check whether the IIIF image service URL is valid and reachable.
-- Confirm the manifest points to a usable image service or resource.
-- A broken image URL or missing image service is a common cause of display failure.
+Use this guide to diagnose and resolve the most common errors.
 
-## Common issues with manifest loading and auth
+---
 
-- Manifest errors may result from invalid JSON, unsupported structure, or a failed resource request.
-- Auth problems may appear as login prompts, denied access, or empty content areas.
-- If access is denied, verify that the resource requires a login or clickthrough flow.
+## 1. CORS (Cross-Origin Resource Sharing) Errors
 
-## Common troubleshooting checklist
+**Symptom**: You paste a manifest URL or image service into Mirador, but the viewer displays an error: *"Unable to load resource"* or the browser console shows:
+`Access to fetch at 'https://...' from origin 'https://...' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.`
 
-1. Verify the manifest URL.
-2. Confirm the image service or media source is available.
-3. Check whether the resource requires authentication.
-4. Review the browser console for resource or fetch errors.
-5. Test the same resource in a known-good Mirador environment if needed.
+### Cause:
+Browsers enforce the Same-Origin Policy. When Mirador running on `domain-a.org` requests a manifest or image tiles from `domain-b.org`, `domain-b.org` MUST include the following HTTP response header:
+```http
+Access-Control-Allow-Origin: *
+```
 
-## Good practice
+### Resolution:
+- **Server Administrators**: Configure the web server (Apache, Nginx, CloudFront, S3) serving manifests and image tiles to send `Access-Control-Allow-Origin: *`.
+- **End Users**: If you do not control the hosting server, test the manifest using a CORS proxy or an instance of Mirador hosted on the same domain as the resource.
 
-- Start with a stable manifest and confirm the resource works before testing more advanced workflows.
-- Keep track of whether the issue is content-related, auth-related, or viewer-related.
+---
+
+## 2. Invalid or Malformed JSON-LD Manifest
+
+**Symptom**: The manifest fails to load, or the window opens with an empty or broken canvas view.
+
+### Troubleshooting Steps:
+1. Open the manifest URL directly in your browser or a JSON formatter.
+2. Verify that the response returns HTTP status `200 OK` and valid JSON.
+3. Validate the manifest using the official [IIIF Presentation Validator](https://presentation-validator.iiif.io/):
+   - Check for missing `@id` (v2) or `id` (v3) properties.
+   - Ensure every `Canvas` declares valid `width` and `height` dimensions.
+   - Confirm that canvases declare valid painting annotations pointing to reachable IIIF Image API services or static files.
+
+---
+
+## 3. Mixed Content Warnings (HTTPS vs. HTTP)
+
+**Symptom**: If your Mirador instance is served over HTTPS (secure), but the manifest URL or image tile services use insecure HTTP:
+`Mixed Content: The page at 'https://...' was loaded over HTTPS, but requested an insecure resource 'http://...'. This request has been blocked.`
+
+### Resolution:
+All manifest URIs, canvas IDs, and image service URLs must use HTTPS (`https://`) when running on an HTTPS-secured website.
+
+---
+
+## 4. Deep-Zoom Image Tiles Failing (Grey or Blank Canvases)
+
+**Symptom**: The manifest loads, metadata and table of contents are visible, but the main image canvas remains blank, grey, or shows broken tile icons.
+
+### Troubleshooting Steps:
+1. Open the browser's Developer Tools (`F12`) and inspect the **Network** tab.
+2. Filter by `Img` or `Fetch/XHR`.
+3. Check the HTTP response status for tile requests:
+   - **404 Not Found**: The image server path is misconfigured in the manifest's `service` block.
+   - **401 Unauthorized / 403 Forbidden**: The image server requires authentication or an active token. See [Working with Protected or Authenticated Resources](/user-guide/working-with-protected-or-authenticated-resources).
+   - **500 Internal Server Error**: The remote IIIF image processor (e.g., Cantaloupe, Loris, IIPImage) is crashing or out of memory.
+
+---
+
+## 5. Diagnostic Checklist
+
+Before opening an issue or contacting repository administrators, run through this checklist:
+
+1. **Test in the Official Live Demo**: Try loading the manifest in the [Mirador Live Demo](https://projectmirador.org/demo/). If it fails there as well, the issue is with the manifest or remote server, not your local setup.
+2. **Inspect the Console**: Press `Ctrl+Shift+I` (or `Cmd+Option+I` on Mac) and check the **Console** tab for red error messages.
+3. **Check the Specification Matrix**: Review the [Mirador IIIF Support Matrix](/iiif-support) to verify whether the feature or API version you are attempting to use is supported.

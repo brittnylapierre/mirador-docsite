@@ -1,34 +1,79 @@
-# Opening and loading a IIIF object
+---
+title: Opening and Loading a IIIF Object
+description: Learn how to load IIIF manifests and collections into Mirador via URL, drag-and-drop, and the workspace catalog.
+---
 
-This page explains how to start working with a IIIF resource inside Mirador.
+# Opening and Loading a IIIF Object
 
-## Adding a manifest by URL
+Mirador connects directly to any repository or digital library that implements the [IIIF Image](https://iiif.io/api/image/) and [IIIF Presentation](https://iiif.io/api/presentation/) specifications. You can load materials from national libraries, museums, university archives, and commercial digital collections.
 
-- Paste a IIIF manifest URL into the add-resource flow.
-- Confirm the resource loads successfully before moving on to viewing and navigation.
-- If the URL is invalid or the resource is not available, Mirador will not be able to render the object.
+![Mirador Loaded with Manifest](/img/user-guide/manifest-single-view.png)
 
-## Loading a collection
+---
 
-- Open a IIIF collection to browse related manifests or sub-collections.
-- Use the collection hierarchy to move between items without leaving the viewer.
-- A collection is useful when a project groups related resources by theme, exhibition, or research set.
+## 1. Adding a Manifest by URL
 
-## Adding resources to the workspace
+The standard method for viewing an item from an external repository is using its **IIIF Manifest URL**:
 
-- Add one or more resources from the workspace controls.
-- Open multiple objects for comparison, reading, or structured research workflows.
-- Keep track of which resource is active, especially in multi-window layouts.
+1. Locate the IIIF logo (`IIIF`) or copy the manifest URI from the providing institution's website (e.g., `https://iiif.wellcomecollection.org/presentation/v2/b18031511`).
+2. In Mirador, click the **Add Resource** button (`＋`) in the upper-left corner of the workspace toolbar.
+3. In the **Add Resource Catalog** modal, locate the text input at the top:
 
-## Understanding a manifest vs canvas vs sequence
+![Add Resource Catalog](/img/user-guide/add-resource-catalog.png)
 
-- A manifest is the IIIF resource description that defines the object and its structure.
-- A canvas is the individual page, image, or media unit that is displayed in a window.
-- A sequence is the ordered set of canvases or pages associated with a manifest.
-- In simple terms: manifest -> sequence -> canvas.
+4. Paste the IIIF manifest URL into the field and click **Add**.
+5. Mirador fetches the manifest, validates its JSON-LD structure, adds it to your catalog, and opens it into an active window.
 
-## Best practices
+> [!TIP]
+> **Using URL Parameters**: You can also launch Mirador with a resource pre-loaded by appending the `?iiif-content=` parameter to the viewer URL, for example:
+> `https://projectmirador.org/embed/?iiif-content=https://iiif.wellcomecollection.org/presentation/v2/b18031511`
 
-- Start with a known-good manifest URL before testing complex collections.
-- Check whether the resource is a manifest, collection, or media object.
-- Use the viewer’s structure information to understand how pages are organized.
+---
+
+## 2. Loading a IIIF Collection
+
+When loading a multi-volume book, archival fond, or curated exhibition set, the URL points to a **IIIF Collection** rather than a single manifest:
+
+![Collection Initial Window](/img/user-guide/collection-overview.png)
+
+1. When a collection loads, Mirador opens a placeholder window showing the collection title, catalog summary, and a **SHOW COLLECTION** button.
+2. Click **SHOW COLLECTION** to open the **Collection Browser Dialog**.
+3. Select any child manifest (such as *Volume 1*) to begin reading.
+
+For comprehensive details on navigating hierarchical sets, see [Using Collections and Table of Contents](/user-guide/using-collections-and-table-of-contents).
+
+---
+
+## 3. Drag-and-Drop Loading
+
+Many digital library platforms provide a draggable IIIF badge:
+
+1. Click and drag the IIIF icon directly from the external website's browser tab or window.
+2. Drag the icon over the Mirador window.
+3. Release the mouse button. Mirador parses the dropped URI and immediately loads the manifest.
+
+---
+
+## Understanding Manifest vs. Canvas vs. Sequence
+
+Before working with complex materials, it is helpful to understand the core IIIF hierarchy:
+
+| Object | Definition | Example |
+| :--- | :--- | :--- |
+| **Manifest** | The overall digital package representing one physical or conceptual item. Contains metadata, licenses, and sequences. | *The Biological Basis of Medicine, Vol. 1* |
+| **Sequence** | An ordered linear arrangement of canvases representing the reading order. | *Standard page order (front-to-back)* |
+| **Canvas** | A 2D surface representing an individual page, sheet, or view. | *Page 42, Folio 12r, or Plate III* |
+| **Image Service** | The underlying deep-zoom tile server powering the OpenSeadragon renderer. | *IIIF Image API Level 2 Endpoint* |
+
+---
+
+## Supported Specifications and Versions
+
+Mirador supports all major versions of the IIIF specifications:
+
+- **Presentation API v2 and v3**: Both v2 (`http://iiif.io/api/presentation/2/context.json`) and v3 (`http://iiif.io/api/presentation/3/context.json`) manifests and collections render natively.
+- **Image API v1, v2, and v3**: Multi-resolution tiled image rendering via OpenSeadragon.
+- **Content Search API v1**: Full-text searching within OCR-indexed items.
+- **Authentication API v1**: Seamless handling of login, cookie, and token workflows.
+
+For an itemized compliance matrix with recipe links, review the [Mirador IIIF Support Matrix](/iiif-support).

@@ -1,26 +1,58 @@
-# Audio and video viewing
+---
+title: Audio and Video Viewing
+description: Play and navigate IIIF Presentation v3 time-based audio and video media in Mirador.
+---
 
-Mirador can also display IIIF resources that include audio or video.
+# Audio and Video Viewing
 
-## Playing embedded media
+With the adoption of the [IIIF Presentation API version 3.0](https://iiif.io/api/presentation/3.0/), IIIF expanded beyond static images to encompass time-based media: sound recordings, oral histories, musical performances, historical film, and video.
 
-- Use the media playback controls to start, pause, seek, and adjust volume.
-- The viewer behaves like a standard browser media player when the resource includes time-based media.
-- Playback depends on the manifest structure and browser support.
+Mirador natively supports time-based A/V canvases, presenting standard playback controls and synchronized captions within its multi-window workspace.
 
-## Basic controls and browser behavior
+---
 
-- Media controls may vary depending on the browser and the embedded resource.
-- Some resources may require specific media encodings or browser support to play correctly.
-- If the media does not play, check the resource configuration and browser environment.
+## Playing Time-Based Media
 
-## Differences between image and media manifests
+When you open a manifest containing audio or video canvases:
 
-- Image manifests focus on static canvases and zoomable views.
-- Media manifests include time-based content and play controls rather than image navigation alone.
-- The interface should adapt based on whether the resource is static, media-based, or mixed.
+- Mirador replaces the static OpenSeadragon deep-zoom canvas with a native HTML5 media player viewport.
+- Standard media controls are presented:
+  - **Play / Pause**: Start or stop playback.
+  - **Seek Bar / Scrubber**: Drag the timeline slider to jump to any point in the recording.
+  - **Time Elapsed / Total Duration**: Displays current timestamp and total track length.
+  - **Volume & Mute**: Adjust output sound level or silence audio.
+  - **Fullscreen (Video)**: Expand video playback to fill the display.
 
-## Best practice
+---
 
-- Use the resource’s metadata and media controls to understand available playback and navigation options.
-- Confirm that the manifest is valid and that the browser supports the media type.
+## Captions and Subtitles (WebVTT)
+
+Mirador supports synchronized captions and subtitles declared as supplementing annotations:
+
+- When a video manifest includes a WebVTT file (`text/vtt`) attached as an annotation with `"motivation": "supplementing"`, Mirador displays the native subtitle toggle.
+- Captions synchronize automatically with video playback.
+- Multiple subtitle tracks (e.g., different languages or descriptions for the hearing impaired) can be selected via the player controls.
+
+---
+
+## Comparing Audio/Video with Static Objects
+
+Because Mirador is a multi-window workspace, you can combine time-based media with static texts:
+
+- Open a video recording of an oral history interview in Window 1.
+- Open the digitized handwritten interview transcript or photographic portraits in Window 2.
+- Listen to audio recordings of an orchestral performance while reading the musical manuscript score side by side.
+
+---
+
+## Current A/V Capabilities & Limitations
+
+Mirador's time-based media support adheres to the current [Mirador IIIF Support Matrix](/iiif-support):
+
+| Capability | Status | Details |
+| :--- | :--- | :--- |
+| **Native HTML5 Playback** | ✅ Supported | Plays any format natively supported by your browser (e.g., MP4/H.264, WebM, MP3, AAC, WAV). |
+| **Synchronized VTT Captions** | ✅ Supported | WebVTT supplementing annotations render as native browser captions. |
+| **HLS / Adaptive Streaming** | ❌ Not supported | Adaptive bitrate video streams (such as `.m3u8` or MPEG-DASH) require custom plugins. |
+| **Temporal Media Fragments** | ❌ Not supported | Fragment targets (e.g., `#t=120,180`) on canvases are currently ignored. |
+| **Accompanying Canvases** | ❌ Not supported | Secondary synchronized canvases (e.g., sign language video alongside main lecture) are not yet integrated. |

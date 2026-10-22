@@ -1,39 +1,91 @@
-# Comparing items in a multi-window workspace
+---
+title: Comparing Items in a Multi-Window Workspace
+description: Compare multiple IIIF manuscripts, editions, and images side by side in Mirador.
+---
 
-Mirador is designed for comparing related objects or pages across multiple windows.
+# Comparing Items in a Multi-Window Workspace
 
-## Opening multiple windows
+The primary design principle behind Mirador is **comparative research**. Unlike single-image viewers, Mirador provides a flexible multi-window workspace that allows scholars, conservators, and researchers to place multiple digital objects side by side, zoom in on corresponding details, and cross-reference metadata in parallel.
 
-- Open additional windows to compare different resources or canvases.
-- Add new manifests or existing resources into separate windows for side-by-side work.
-- Use the workspace controls to manage the number of active windows.
+![Multi-Window Workspace Comparison](/img/user-guide/multi-window-side-by-side.png)
 
-## Comparing side by side
+---
 
-- Place related objects next to each other for close comparison.
-- Keep the most relevant windows visible while reducing visual clutter.
-- Compare editions, manuscripts, maps, or other related objects in parallel.
+## Adding Resources to the Workspace
 
-## Arranging workspace layout
+To open multiple objects in your workspace:
 
-- Reposition windows to fit the current comparison task.
-- Adjust how windows are laid out depending on the number of materials in view.
-- Use the workspace arrangement best suited to the project or reading workflow.
+1. Click the **Add Resource** button (`＋`) in the upper-left corner of the workspace toolbar.
+2. The **Resource Catalog** opens as a dialog overlay:
 
-## Using mosaic vs elastic mode
+![Add Resource Catalog](/img/user-guide/add-resource-catalog.png)
 
-- Mosaic mode provides a structured arrangement with predictable grid-like organization.
-- Elastic mode allows more flexible manual positioning for a less rigid workspace.
-- Choose the layout that supports the comparison task without distracting from the content.
+3. From this dialog, you can:
+   - **Select Preloaded Manifests**: Click any existing manifest or collection loaded in the catalog (e.g., selecting *Volume 2* alongside *Volume 1*).
+   - **Add New Manifest by URL**: Paste the URL of any valid IIIF Presentation Manifest or Collection into the text input and click **Add**.
+4. Once selected, Mirador automatically tiles the new window beside your existing windows.
 
-## Maximizing, focusing, and closing windows
+---
 
-- Maximize a single window to inspect one object in detail.
-- Focus on the active window for more controlled navigation and browsing.
-- Close windows when they are no longer needed in the current comparison task.
+## Workspace Layouts: Mosaic vs. Elastic
 
-## Typical use cases
+Mirador offers two distinct workspace layout paradigms depending on your research needs:
 
-- Compare two manuscripts from different institutions.
-- Place a map side by side with a catalog record or related image.
-- Review manuscript pages while keeping metadata or annotations visible in separate panels.
+![Select Workspace Type Menu](/img/user-guide/workspace-type-menu.png)
+
+To switch between layout modes, click the **Workspace settings** icon (`⚙`) in the top workspace toolbar and choose **Select workspace type**:
+
+### 1. Mosaic Mode (Tiled Grid)
+
+**Mosaic mode** is the default layout. It organizes windows into clean, non-overlapping rows and columns:
+
+- Windows automatically resize to share the screen equally (e.g., 50/50 split for two windows, 2x2 grid for four windows).
+- Dividers between windows can be dragged horizontally or vertically to adjust the proportions of each pane.
+- Perfect for side-by-side comparative inspection of two book volumes, historical editions, or infrared vs. visible light photography.
+
+### 2. Elastic Mode (Freeform Canvas)
+
+**Elastic mode** provides an infinite 2D canvas where windows can be freely moved, stacked, resized, and arranged:
+
+- Windows can overlap like desktop applications.
+- Drag any window by its header to position it anywhere in the workspace.
+- Drag the edges and corners of windows to customize dimensions independently.
+- Pan and zoom the entire workspace canvas to manage large numbers of open resources simultaneously.
+
+---
+
+## Managing Individual Windows
+
+Each window in the workspace operates independently, with its own zoom level, pan position, canvas sequence, and sidebar state.
+
+### Maximizing a Window
+
+When you need to focus on a single object in full detail without closing your other windows:
+
+1. Click the **Maximize window** button (`□`) in the window's top-right header.
+2. The selected window expands to fill the entire workspace viewport:
+
+![Window Maximized](/img/user-guide/window-maximized.png)
+
+3. To return to your multi-window layout, click the **Restore window** button (`⧉`). All other windows return to their previous positions and zoom states.
+
+### Closing a Window
+
+When you finish inspecting an object:
+
+1. Click the **Close window** button (`✕`) in the upper-right corner of the window.
+2. Mirador closes the window and automatically redistributes the remaining workspace area among the remaining windows:
+
+![Window Closed](/img/user-guide/window-closed.png)
+
+---
+
+## Saving and Sharing Workspace Sessions
+
+Mirador allows you to preserve your multi-window comparative setup:
+
+![Workspace Options Menu](/img/user-guide/workspace-options-menu.png)
+
+1. Click the **Workspace options** button (`⋮`) in the workspace control panel.
+2. Choose **Export workspace** to download or copy a JSON configuration string of your exact layout, open manifests, canvas indices, and viewport coordinates.
+3. To reload a previously saved session or share it with a colleague, click **Import workspace** and paste the JSON configuration.

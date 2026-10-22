@@ -1,34 +1,53 @@
-# Working with layers and complex canvases
+---
+title: Working with Layers and Complex Canvases
+description: Learn how to manage multi-spectral imaging, layer opacities, Choice resources, and complex canvas structures in Mirador.
+---
 
-Some IIIF resources include multiple image layers, alternative sequences, or complex page structures.
+# Working with Layers and Complex Canvases
 
-## Switching image layers
+Certain digital surrogates—particularly in art conservation, paleography, and cartography—require displaying multiple synchronized images over the same canvas. Examples include multi-spectral scans (natural light, infrared reflectography, ultraviolet fluorescence, X-ray radiography) or historical maps layered over modern satellite imagery.
 
-- Use the layers panel to change the active image layer.
-- Different layers may show different views or brighten, restore, or emphasize details.
-- Layer changes are most useful for manuscripts, maps, and objects with multiple image treatments.
+Mirador natively supports IIIF Presentation v2 and v3 **Choice resources** and multi-painting annotations, giving researchers interactive control over layer opacities and stacking order.
 
-## Handling sequence variants
+---
 
-- Some resources contain multiple sequences or alternative reading orders.
-- Switch between sequences to review different page arrangements or material groupings.
-- Sequence variants may reflect the original object structure or a curated presentation order.
+## What Are Canvas Layers?
 
-## Working with layered, manuscript, or map content
+In the IIIF data model:
 
-- Manuscripts may include complex arrangements with folios, alternative views, or folded structures.
-- Maps may add comparison or layered image treatments for interpretation.
-- Use the viewer controls to focus on the most important structure for the current task.
+- A single **Canvas** defines the abstract coordinate space.
+- Multiple **Painting Annotations** or a single **Choice** resource attach different image services to that same canvas.
+- Rather than opening multiple windows to see different light spectra, all captures align to the exact same pixel coordinates.
 
-## When to use book vs scroll vs single mode
+---
 
-- Book view is effective for facing pages or paged objects.
-- Scroll view is better for long continuous reading sequences.
-- Single view is ideal for focused inspection of one page at a time.
+## Using the Layers Panel
 
-## Suggested workflow
+When a loaded manifest includes layered or choice image resources:
 
-1. Open the layers panel.
-2. Check whether the resource has multiple image layers or sequences.
-3. Choose a reading mode that matches the object structure.
-4. Use the canvas or thumbnail navigation to move through the resource.
+1. Click the **Toggle sidebar** button (`☰`) in the window header.
+2. Select the **Layers** tab in the sidebar.
+3. The Layers panel displays each available image layer with its descriptive label (e.g., *Natural Light*, *Infrared*, *X-Ray Radiograph*).
+
+### Controlling Opacity and Visibility
+
+- **Visibility Checkboxes**: Toggle individual layers on or off to isolate a specific capture.
+- **Opacity Sliders**: Adjust the opacity slider of any layer from 0% (fully transparent) to 100% (fully opaque). Blending layers at 50% opacity allows you to reveal underdrawings, hidden text, or palimpsest layers beneath the surface pigment.
+- **Layer Stacking Order**: Drag layers up or down in the list to change which image renders on top.
+
+---
+
+## Working with Multiple Sequences
+
+Some complex archival objects contain more than one reading order or image sequence (for example, a manuscript photographed before and after physical conservation, or folded foldouts and gatefolds):
+
+- If a manifest declares multiple sequences, Mirador surfaces a sequence selector in the window or sidebar.
+- Switch between sequences to examine alternative curatorial arrangements without losing your zoom state or annotation view.
+
+---
+
+## When to Use Different View Modes
+
+- **Single View**: Best for deep layer blending and close technical examination of a single folio or canvas.
+- **Book View**: Ideal for bound volumes where you want to see facing pages in natural spreads.
+- **Gallery View**: Best for quickly scanning multi-page items to see which folios feature special multi-spectral or foldout captures.

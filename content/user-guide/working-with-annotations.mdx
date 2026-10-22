@@ -1,32 +1,51 @@
-# Working with annotations
+---
+title: Working with Annotations
+description: View, inspect, and toggle canvas annotations, transcriptions, and commentary in Mirador.
+---
 
-Mirador can display annotations when the IIIF resource includes annotation content or an annotation service.
+# Working with Annotations
 
-## How to view annotations
+In the IIIF ecosystem, annotations are first-class citizens. Annotations link commentary, scholarly transcriptions, translations, visual highlights, and tags to specific canvases or spatial coordinate regions (`xywh` or SVG polygons).
 
-- Open the annotations panel or overlay controls to review visible annotation sets.
-- Use the viewer to see annotation markup over the image or within the resource context.
-- Check which annotation list is active before reviewing the content.
+Mirador renders annotations seamlessly over the image canvas while providing a structured list in the companion sidebar.
 
-## Understanding annotation types and motivations
+![Sidebar Annotations Panel](/img/user-guide/sidebar-annotations.png)
 
-- Textual annotations may explain or describe part of the image.
-- Region-based annotations may highlight a specific area on the canvas.
-- Annotation motivations vary, such as commenting, bookmarking, or identifying key features.
+---
 
-## Filtering annotation sets
+## Viewing Canvas Annotations
 
-- Reduce clutter by filtering annotation sets or layers.
-- Focus on the annotation source most relevant to the current task.
-- This helps when a single object includes multiple annotation providers or review groups.
+When a loaded manifest includes linked `AnnotationList` (Presentation v2) or `AnnotationPage` (Presentation v3) resources:
 
-## Reading annotation content and metadata
+1. Click the **Toggle sidebar** button (`☰`) in the window header.
+2. Select the **Annotations** tab (speech bubble icon).
+3. The Annotations panel lists all annotations associated with the active canvas.
 
-- Review the text body, labels, and metadata attached to each annotation.
-- Consider source, author, date, and related resource information when interpreting what is shown.
+---
 
-## How annotations appear over the image
+## Anatomy of an Annotation in Mirador
 
-- Annotations may appear as overlays, regions, markers, or linked notes.
-- They often correspond to a specific canvas area and help draw attention to notable details.
-- Use the annotation layer to understand both the image and the commentary attached to it.
+Mirador supports standard W3C Web Annotation and Open Annotation data models:
+
+- **Target / Spatial Selector**: A rectangular fragment (`#xywh=100,200,300,150`) or complex SVG path defining where the annotation appears on the canvas.
+- **Body / Content**: The textual transcription, translation, explanatory comment, or HTML-formatted note.
+- **Motivation**: Identifies the purpose of the annotation (e.g., `commenting`, `supplementing`, `tagging`, `describing`).
+- **Creator / Attribution**: Metadata identifying who created the annotation and when it was authored.
+
+---
+
+## Interacting with Annotations on the Canvas
+
+- **Canvas Overlays**: Bounding boxes or shaded SVG polygons are drawn directly over the image canvas.
+- **Hover & Tooltip**: Hovering your cursor over an annotated region highlights the corresponding text in the sidebar.
+- **Click to Focus**: Clicking an annotation in the sidebar zooms the canvas directly to that region and displays the commentary card.
+- **Toggle Visibility**: Use the visibility toggle icon in the Annotations panel header to hide or show annotation bounding boxes on the canvas, allowing unobstructed inspection of the underlying image.
+
+---
+
+## Annotation Collections & External Annotation Servers
+
+Institutions often host annotations on external annotation servers (such as Elucidate or custom backends) or link them via paginated `AnnotationCollection` records.
+
+> [!NOTE]
+> Mirador renders and navigates pre-existing annotations published with manifests. For in-viewer annotation creation, drawing tools, and authoring workflows, community plugins (such as `mirador-annotations`) can be integrated. Consult the [Plugins Guide](/install-config/plugins) for implementation details.

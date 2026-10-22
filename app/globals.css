@@ -342,3 +342,318 @@ footer a:hover {
     min-height: 500px;
   }
 }
+
+
+/* ==========================================================================
+   IIIF Support Matrix
+   ========================================================================== */
+
+.iiif-matrix-container {
+  margin-top: 1.5rem;
+  margin-bottom: 3.5rem;
+  width: 100%;
+}
+
+.iiif-scorecard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.iiif-scorecard-item {
+  background: #f8fafc;
+  border: 1px solid var(--mirador-surface-border);
+  border-radius: 8px;
+  padding: 12px 14px;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.dark .iiif-scorecard-item {
+  background: rgb(24 30 38);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.iiif-scorecard-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.iiif-scorecard-detail {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--mirador-text-muted);
+  line-height: 1.4;
+}
+
+.iiif-matrix-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--mirador-surface-border);
+  position: sticky;
+  top: 4rem;
+  background: #ffffff;
+  z-index: 10;
+}
+
+.dark .iiif-matrix-controls {
+  background: rgb(16 20 24);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.iiif-matrix-search-box {
+  flex: 1 1 200px;
+}
+
+.iiif-matrix-search-input {
+  width: 100%;
+  padding: 7px 12px;
+  border: 1px solid var(--mirador-surface-border);
+  border-radius: 6px;
+  font-size: 0.88rem;
+  background: #ffffff;
+  color: inherit;
+  outline: none;
+  transition: border-color 150ms ease;
+}
+
+.dark .iiif-matrix-search-input {
+  background: rgb(24 30 38);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: rgb(248 250 252);
+}
+
+.iiif-matrix-search-input:focus {
+  border-color: var(--mirador-secondary);
+}
+
+.iiif-matrix-filter-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.iiif-filter-btn {
+  border: 1px solid var(--mirador-surface-border);
+  background: #f8fafc;
+  color: inherit;
+  border-radius: 20px;
+  padding: 5px 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 120ms ease;
+}
+
+.dark .iiif-filter-btn {
+  background: rgb(24 30 38);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.iiif-filter-btn:hover {
+  border-color: var(--mirador-secondary);
+}
+
+.iiif-filter-btn.active {
+  border-color: var(--mirador-secondary);
+  background: var(--mirador-secondary-soft);
+  color: var(--mirador-secondary-ink);
+  font-weight: 700;
+}
+
+.dark .iiif-filter-btn.active {
+  background: rgba(25, 103, 210, 0.28);
+  color: #93c5fd;
+  border-color: #60a5fa;
+}
+
+.iiif-matrix-area-filter select {
+  padding: 6px 10px;
+  border: 1px solid var(--mirador-surface-border);
+  border-radius: 6px;
+  font-size: 0.84rem;
+  background: #ffffff;
+  color: inherit;
+  outline: none;
+  cursor: pointer;
+}
+
+.dark .iiif-matrix-area-filter select {
+  background: rgb(24 30 38);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: rgb(248 250 252);
+}
+
+.iiif-matrix-count {
+  font-size: 0.82rem;
+  color: var(--mirador-text-muted);
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+.iiif-table-wrapper {
+  overflow-x: auto;
+  border: 1px solid var(--mirador-surface-border);
+  border-radius: 8px;
+}
+
+.dark .iiif-table-wrapper {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.iiif-matrix-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+  text-align: left;
+}
+
+.iiif-matrix-table th {
+  padding: 10px 14px;
+  border-bottom: 2px solid var(--mirador-surface-border);
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--mirador-text-muted);
+  background: #f8fafc;
+}
+
+.dark .iiif-matrix-table th {
+  background: rgb(20 25 32);
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+.iiif-matrix-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--mirador-surface-border);
+  vertical-align: top;
+}
+
+.dark .iiif-matrix-table td {
+  border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+.iiif-area-row td {
+  background: #f1f5f9;
+  font-weight: 700;
+  font-size: 0.84rem;
+  padding: 9px 14px;
+  letter-spacing: 0.02em;
+}
+
+.dark .iiif-area-row td {
+  background: rgb(26 33 42);
+  color: rgb(241 245 249);
+}
+
+.iiif-cap-cell {
+  font-weight: 600;
+}
+
+.iiif-status-cell {
+  white-space: nowrap;
+}
+
+.iiif-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.iiif-badge-supported {
+  color: #1a7f37;
+  background: #dafbe1;
+}
+
+.dark .iiif-badge-supported {
+  color: #3fb950;
+  background: rgba(46, 160, 67, 0.22);
+}
+
+.iiif-badge-partial {
+  color: #9a6700;
+  background: #fff8c5;
+}
+
+.dark .iiif-badge-partial {
+  color: #d29922;
+  background: rgba(187, 128, 9, 0.22);
+}
+
+.iiif-badge-notsupported {
+  color: #cf222e;
+  background: #ffebe9;
+}
+
+.dark .iiif-badge-notsupported {
+  color: #f85149;
+  background: rgba(248, 81, 73, 0.22);
+}
+
+.iiif-badge-unknown {
+  color: #57606a;
+  background: #eaeef2;
+}
+
+.dark .iiif-badge-unknown {
+  color: #8b949e;
+  background: rgba(139, 148, 158, 0.22);
+}
+
+.iiif-note-cell {
+  line-height: 1.55;
+  color: inherit;
+}
+
+.iiif-note-cell a {
+  color: var(--mirador-secondary) !important;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.iiif-note-cell a:hover {
+  color: var(--mirador-secondary-hover) !important;
+}
+
+.iiif-matrix-empty {
+  text-align: center;
+  padding: 48px 16px;
+  color: var(--mirador-text-muted);
+  border: 1px dashed var(--mirador-surface-border);
+  border-radius: 8px;
+}
+
+.iiif-reset-btn {
+  margin-top: 12px;
+  border: 1px solid var(--mirador-secondary);
+  background: var(--mirador-secondary-soft);
+  color: var(--mirador-secondary-ink);
+  border-radius: 6px;
+  padding: 6px 16px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.iiif-reset-btn:hover {
+  background: var(--mirador-secondary);
+  color: #ffffff;
+}
+
+.iiif-matrix-footer {
+  margin-top: 24px;
+  font-size: 0.82rem;
+  color: var(--mirador-text-muted);
+  line-height: 1.5;
+}

@@ -1,27 +1,64 @@
-# Working with protected or authenticated resources
+---
+title: Working with Protected or Authenticated Resources
+description: Understand how Mirador handles IIIF Authentication API v1 flows, login prompts, and access control.
+---
 
-Some IIIF objects require login, clickthrough, or other access flows before they can be viewed.
+# Working with Protected or Authenticated Resources
 
-## Login and clickthrough flows
+Many cultural heritage institutions, university libraries, and private archives manage digital materials subject to copyright restrictions, donor embargoes, campus-only licensing, or sensitive content warnings.
 
-- Some resources require a user to log in before the viewer can load the object.
-- Clickthrough workflows may ask the user to accept terms before viewing the item.
-- These flows are part of the IIIF auth pattern and are often required by institutions or service providers.
+To support secure access without breaking interoperability, IIIF defined the [IIIF Authentication API](https://iiif.io/api/auth/1.0/). Mirador natively implements IIIF Auth API version 1.0, enabling users to log in, accept clickthrough terms, and view restricted content directly inside the viewer.
 
-## Kiosk and external auth patterns
+---
 
-- Some environments use kiosk-style access or external authentication services.
-- Mirador may rely on the browser session and the resource’s IIIF auth configuration to grant access.
-- External auth flows may involve redirects or additional security checks.
+## The Four IIIF Authentication Patterns
 
-## Troubleshooting access denied or auth prompts
+Mirador supports all four standardized interaction patterns defined in IIIF Auth v1:
 
-- If a resource fails to load, check whether login or clickthrough is required.
-- Confirm that cookies, sessions, and browser permissions are functioning correctly.
-- Review the IIIF auth service documentation if access is unexpectedly denied.
+### 1. Login Flow (Institutional SSO / Username & Password)
 
-## How Mirador handles IIIF auth
+Used when access requires institutional credentials (e.g., Shibboleth/SAML, CAS, OAuth, or campus credentials):
 
-- Mirador follows the auth flow provided by the resource and the browser environment.
-- Support depends on the manifest, auth service, and the viewer configuration.
-- When auth is configured correctly, users can access protected resources without leaving the viewer experience.
+1. When a user requests a protected resource, Mirador detects the auth service in the manifest.
+2. A modal dialog prompts the user: *"You must log in to view this material."*
+3. Clicking **Log In** opens the institution's secure login portal in a separate browser popup or tab.
+4. Once authenticated, the popup sends a secure postMessage token back to Mirador and closes.
+5. Mirador reloads the protected deep-zoom image tiles and metadata seamlessly.
+
+### 2. Clickthrough Flow (Terms of Service / Warnings)
+
+Used when access is open to the public but requires agreeing to conditions of reuse, copyright acknowledgments, or content advisories:
+
+- Mirador presents an in-viewer agreement dialog containing the institution's statement.
+- The user clicks **Agree** or **Accept**.
+- Mirador caches the session token and immediately renders the high-resolution images.
+
+### 3. Kiosk Flow (Public Terminals / On-Premise Access)
+
+Used in physical library reading rooms or museum exhibition kiosks:
+
+- Automatically obtains authorization based on the terminal's IP address or pre-configured physical session without requiring manual interaction from patrons.
+
+### 4. External Flow
+
+Used when the user has already authenticated with the host website before launching the viewer:
+
+- Mirador attempts a silent cookie/token check. If the parent session is valid, content loads without interrupting the user.
+
+---
+
+## Browser Privacy Settings & Third-Party Cookies
+
+Modern browsers (Chrome, Firefox, Safari) enforce strict third-party cookie restrictions:
+
+> [!WARNING]
+> If a protected manifest is hosted on a different domain than the Mirador web application (e.g., viewing Harvard resources in a Stanford-hosted Mirador instance), the browser may block authentication cookies.
+> - Ensure your browser allows storage access for the authentication popup window.
+> - Repository administrators should configure IIIF Auth with postMessage token exchange (`token` service) rather than relying solely on cross-origin cookies.
+
+---
+
+## Authentication Troubleshooting
+
+- **"Forbidden" or Grey Tile Errors**: Indicates that the image server rejected the access token or the session has expired. Click the user icon or reload the window to trigger a new login prompt.
+- **Degraded Tiers**: Some institutions grant a low-resolution thumbnail to anonymous users, with full deep-zoom resolution unlocked upon logging in. Mirador will prompt you to log in to access the full-resolution tier.

@@ -1,21 +1,83 @@
-# Language, locale, and appearance settings
+---
+title: Language, Locale, and Appearance Settings
+description: Customize theme colors, interface languages, zoom controls, and reading directions in Mirador.
+---
 
-Mirador can be configured to support different interface languages, themes, and reading patterns.
+# Language, Locale, and Appearance Settings
 
-## Switching languages
+Mirador is designed for international research communities and diverse reading environments. Users can easily customize the interface appearance, toggle dark mode, switch between dozens of localized languages, and view materials formatted for right-to-left reading directions.
 
-- Use the interface language settings to change the viewer labels.
-- Some manifests may also include language-specific metadata or labels.
-- A locale change affects the interface, not necessarily the underlying resource description.
+All workspace-wide settings are accessible from the **Workspace settings** icon (`⚙` / palette) located in the top workspace control panel:
 
-## Dark mode and light mode
+![Workspace Settings Menu](/img/user-guide/workspace-settings-menu.png)
 
-- Switch between darker and lighter interface themes for comfort or accessibility.
-- Appearance settings can support different reading environments and user preferences.
-- Good contrast is important for readability and accessibility.
+---
 
-## Right-to-left language support
+## Dark Theme and Light Theme
 
-- Mirador supports right-to-left reading patterns when the resource or interface metadata requires it.
-- Resource metadata, `viewingDirection`, and locale settings can influence how the viewer behaves.
-- This is especially useful for languages and materials that are normally read right to left.
+Mirador provides high-contrast, accessibility-tested themes:
+
+- **Light theme** (default): Clean, white background ideal for brightly lit environments and standard reading.
+- **Dark theme**: Deep-slate dark background designed to reduce eye strain in low-light environments, photographic darkrooms, and conservation studios:
+
+![Workspace Dark Theme](/img/user-guide/workspace-theme-dark.png)
+
+### How to Change the Theme:
+
+1. Click the **Workspace settings** icon (`⚙`) in the top workspace control panel.
+2. Hover over or click **Change theme**.
+3. Select **Dark theme** or **Light theme**. The entire UI—including window headers, menus, sidebars, and dialogs—updates instantly.
+
+---
+
+## Switching Interface Languages
+
+Mirador features community-maintained translations for over 20 languages:
+
+![Workspace Language Menu](/img/user-guide/workspace-language-menu.png)
+
+### Available Locales Include:
+
+- English (`en`)
+- Deutsch (`de`)
+- Français (`fr`)
+- Español (`es`)
+- Italiano (`it`)
+- 日本語 (`ja`)
+- 中文 (`zh-CN` / `zh-TW`)
+- Nederlands (`nl`)
+- Português (`pt-BR`)
+- עברית (`he`)
+- العربية (`ar`)
+- ...and many others.
+
+### How to Switch Language:
+
+1. Click the **Workspace settings** icon (`⚙`).
+2. Click **Language**.
+3. Choose your preferred language from the list. All UI labels, tooltips, dialogs, and button descriptions will update immediately.
+
+> [!NOTE]
+> Changing the interface language localizes Mirador's application UI (tooltips, buttons, menus). It does not translate the metadata or text within the IIIF manifest itself, which remains in the languages supplied by the publishing institution. If a manifest provides multi-language metadata, Mirador will display the metadata matching your chosen locale if available.
+
+---
+
+## Toggling Zoom Controls
+
+For presentations or uncluttered visual viewing:
+
+1. Click the **Workspace settings** icon (`⚙`).
+2. Click **Hide zoom controls** (or **Show zoom controls**).
+3. The floating zoom and pan buttons on the canvas viewport will toggle on or off. Even with controls hidden, you can continue zooming and panning using mouse wheel, trackpad, or keyboard shortcuts.
+
+---
+
+## Right-to-Left (RTL) Reading Support
+
+Many cultural heritage materials (such as Hebrew, Arabic, Persian, and traditional East Asian manuscripts) are read from right to left:
+
+- When a IIIF manifest declares `"viewingDirection": "right-to-left"`, Mirador automatically configures its navigation:
+  - In **Book View**, the sequence opens from right to left, with the first page on the right side of the spread.
+  - The canvas forward navigation arrow (`>`) steps in the proper reading direction.
+  - The thumbnail filmstrip orders canvases according to the manuscript's natural reading flow.
+- When an RTL interface language (such as Arabic or Hebrew) is selected, Mirador flips the workspace UI and sidebar orientations to follow RTL conventions.

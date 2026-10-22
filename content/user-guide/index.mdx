@@ -1,18 +1,73 @@
-# User guide overview
+---
+title: Mirador User Guide Overview
+description: Learn how to navigate, inspect, compare, and manage IIIF digital objects in Mirador.
+---
 
-overview
+# User Guide Overview
 
-## Browse by task
+Mirador is an open-source, multi-window image viewing workspace tailored for cultural heritage, academic research, and deep visual inspection. It natively supports the [International Image Interoperability Framework (IIIF)](https://iiif.io/) specifications, allowing you to seamlessly load, navigate, and compare high-resolution digital objects from archives, libraries, and museums worldwide.
 
-- [Opening and loading a IIIF object](/user-guide/opening-and-loading-a-iiif-object)
-- [Basic image navigation](/user-guide/basic-image-navigation)
-- [Comparing items in a multi-window workspace](/user-guide/comparing-items-in-a-multi-window-workspace)
-- [Using the side panels and metadata](/user-guide/using-side-panels-and-metadata)
-- [Searching and finding content](/user-guide/searching-and-finding-content)
-- [Working with annotations](/user-guide/working-with-annotations)
-- [Working with layers and complex canvases](/user-guide/working-with-layers-and-complex-canvases)
-- [Using collections and table of contents](/user-guide/using-collections-and-table-of-contents)
-- [Audio and video viewing](/user-guide/audio-and-video-viewing)
-- [Working with protected or authenticated resources](/user-guide/working-with-protected-or-authenticated-resources)
-- [Language, locale, and appearance settings](/user-guide/language-locale-and-appearance-settings)
-- [Errors and troubleshooting](/user-guide/errors-and-troubleshooting)
+![Mirador Workspace Anatomy](/img/user-guide/manifest-single-view.png)
+
+## Core Concepts
+
+Understanding Mirador's architectural hierarchy makes navigating the viewer intuitive:
+
+| Concept | Description |
+| :--- | :--- |
+| **Workspace** | The root container managing open windows, layouts, global controls, and theme settings. |
+| **Window** | An independent viewport hosting a single IIIF Manifest or Collection. Each window has its own navigation, view modes, and companion sidebar. |
+| **Manifest** | A IIIF resource package describing a physical object (book, scroll, artwork, photograph) and its metadata. |
+| **Collection** | A structured grouping of related manifests or sub-collections (e.g., multi-volume sets, archival series). |
+| **Canvas** | A virtual 2D surface representing a single page, sheet, or image layer. |
+| **Companion Window (Sidebar)** | The contextual side panel displaying metadata, table of contents, annotations, rights, and search. |
+
+---
+
+## Workspace Anatomy
+
+Mirador's interface consists of three primary areas:
+
+```
+┌────────────────────────────────────────────────────────────────────────┐
+│ [＋ Add Resource]   [Window Count: 1]    [Settings ⚙]  [Options ⋮] [⛶] │ <-- Workspace Control Panel
+├────────────────────────────────────────────────────────────────────────┤
+│ ┌─ [Window: Volume 1] ───────────────────────────────────────────────┐ │
+│ │ [Sidebar ☰]   The biological basis of medicine    [Views ⊞] [□] [✕]│ │ <-- Window Header
+│ ├───────────────────┬────────────────────────────────────────────────┤ │
+│ │ Companion Sidebar │ Canvas Viewport (Deep Zoom)                    │ │
+│ │ • Information     │                                                │ │
+│ │ • Rights          │                     [ + ]                      │ │
+│ │ • Index (TOC)     │                     [ - ]                      │ │
+│ │ • Annotations     │                     [ ⌂ ]                      │ │
+│ │ • Search          │                  <  1 of 614  >                │ │
+│ ├───────────────────┴────────────────────────────────────────────────┤ │
+│ │ Bottom Thumbnail Filmstrip [ 1 ] [ 2 ] [ 3 ] [ 4 ] [ 5 ] ...       │ │
+│ └────────────────────────────────────────────────────────────────────┘ │
+└────────────────────────────────────────────────────────────────────────┘
+```
+
+1. **Workspace Control Panel (Top Bar)**: Global actions including adding resources (`+`), jumping between windows, workspace settings (theme, language, workspace type), session export/import, and fullscreen toggle.
+2. **Window Control Bar**: Window-specific controls including sidebar toggle, manifest title, view mode selector, window maximize/restore, and close button.
+3. **Canvas Viewport**: Powered by OpenSeadragon for smooth deep zooming, panning, and canvas stepping.
+4. **Companion Sidebar**: Five specialized tabs providing metadata, rights statements, table of contents, annotations, and full-text search.
+5. **Thumbnail Strip / Gallery**: Filmstrip navigation allowing you to quickly scan through pages and jump to any canvas.
+
+---
+
+## User Guide Topics
+
+Explore the detailed guides below to master each aspect of Mirador:
+
+- **[Opening and Loading a IIIF Object](/user-guide/opening-and-loading-a-iiif-object)**: Load manifests and collections via URL, drag-and-drop, or the workspace catalog.
+- **[Using Collections and Table of Contents](/user-guide/using-collections-and-table-of-contents)**: Explore multi-volume books, archival series, and structured navigation.
+- **[Basic Image Navigation](/user-guide/basic-image-navigation)**: Deep zooming, panning, single/book/gallery view modes, and thumbnail filmstrips.
+- **[Comparing Items in a Multi-Window Workspace](/user-guide/comparing-items-in-a-multi-window-workspace)**: Side-by-side comparison, mosaic vs. elastic layouts, maximizing, and managing windows.
+- **[Using Side Panels and Metadata](/user-guide/using-side-panels-and-metadata)**: Inspect descriptive metadata, rights statements, index structures, and companion panels.
+- **[Searching and Finding Content](/user-guide/searching-and-finding-content)**: Execute in-manifest searches and navigate directly to matching text hits.
+- **[Working with Annotations](/user-guide/working-with-annotations)**: Display, inspect, and toggle canvas annotation layers and commentary.
+- **[Working with Layers and Complex Canvases](/user-guide/working-with-layers-and-complex-canvases)**: Multi-spectral imaging, layer opacities, and composite canvases.
+- **[Audio and Video Viewing](/user-guide/audio-and-video-viewing)**: Native HTML5 time-based media playback and caption support.
+- **[Working with Protected or Authenticated Resources](/user-guide/working-with-protected-or-authenticated-resources)**: Accessing login-restricted IIIF resources via IIIF Auth API.
+- **[Language, Locale, and Appearance Settings](/user-guide/language-locale-and-appearance-settings)**: Dark mode theme, workspace types, and interface localization.
+- **[Errors and Troubleshooting](/user-guide/errors-and-troubleshooting)**: Diagnosing common manifest errors, CORS issues, and playback limitations.
