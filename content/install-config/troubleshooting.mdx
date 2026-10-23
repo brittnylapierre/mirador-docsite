@@ -12,7 +12,7 @@ returns valid JSON, and is not blocked by authentication, CORS, or a local netwo
 
 ## The Layout Is Too Open For A Single Object Page
 
-Disable workspace controls and prevent the default window from closing.
+Disable workspace controls and prevent the default window from closing:
 
 ```js
 Mirador.viewer({
@@ -26,10 +26,70 @@ Mirador.viewer({
 });
 ```
 
-## Search Does Not Appear
+## Search Does Not Appear or Queries Fail
 
-The manifest needs a compatible IIIF Content Search API service. If a service exists, check that the
-window sidebar and search panel have not been disabled by local configuration.
+The manifest must declare a compatible **IIIF Content Search API v1** service (`http://iiif.io/api/search/1/search` or `http://iiif.io/api/search/0/search`). Note:
+- Mirador does **not** support **Search API v2** (W3C Web Annotation response shapes). If your search service serves v2 responses, Mirador cannot parse the hit structures.
+- Ensure the companion sidebar and search panel have not been disabled in your Mirador config (`window.sideBarOpen`, `window.defaultSidebarPanel: 'search'`).
+- Verify that CORS headers are permitted on the search service endpoint.
+
+## Authenticated Resources Fail with 401/403 Errors
+
+Mirador implements **IIIF Authentication API v1** across all four patterns (Login, Clickthrough, Kiosk, External).
+- Mirador does **not** support the **Auth API v2** probe service model. Protected manifests must provide Auth v1 service descriptions.
+- Modern browser third-party cookie restrictions frequently block cross-domain authentication cookies. Ensure the authentication workflow uses Mirador's `postMessage` token service flow.
+- **Silent Auth Failures (External & Kiosk):** Both `external` and `kiosk` profiles run non-interactively in the background. If token retrieval fails, these profiles fail silently without displaying user alerts, leaving the image in a degraded or blurry state. Check the browser Network and Console tabs for failed token service requests.
+
+## Search Results Are Empty or Lack Snippets
+
+Search snippet quality depends directly on the Search API response:
+- Mirador expects the search response to include a `hits[]` array containing `before`, `match`, and `after` text fragments.
+- If your search backend returns search annotations without a `hits` array, Mirador will display matching canvas counts or empty/unlabelled result rows in the companion search window. Ensure your server populates standard IIIF Search `hits`.
+
+## "Show Collection" Button Is Missing in the Sidebar
+
+Implementers often expect the "Show collection" navigation button to always appear on items belonging to an archival collection:
+- By design, the "Show collection" button only appears when a user opened the manifest after navigating through an in-viewer collection browser.
+- If a manifest is loaded directly by its manifest URL, Mirador has no collection ancestry stored in its Redux state, so the button cannot be rendered.
+
+## Book View Zoom Resets on Page Turn & Facing-Page Centering
+
+In Book view (facing page spreads):
+- Mirador currently resets pan and zoom coordinates back to default whenever a user turns facing pages.
+- Centering on facing-page spreads can exhibit slight alignment drift depending on the relative dimensions of adjacent canvases.
+
+## Language State Alignment Discrepancies
+
+When integrating multilingual manifests with Mirador's app locale settings:
+- While switching the app language will attempt to align with an offered manifest language, state alignment between app locale and manifest locale can occasionally encounter stale-state synchronization in complex workspaces.
+
+## Workspace JSON Import Errors
+
+Workspace exports generated from the workspace options menu are raw Redux state dumps:
+- Mirador does not perform schema validation on JSON files uploaded via **Import workspace**.
+- Malformed JSON, corrupted IDs, or hand-edited attributes can crash the workspace session. Edit exported configuration files with care.
+
+## URL Sharing Does Not Preserve Current Canvas or Zoom Region
+
+Mirador does not implement the **IIIF Content State API** (`iiif-content` query parameter or base64-encoded state). To open Mirador at a specific item or canvas, configure the initial state programmatically in your viewer configuration:
+
+```js
+Mirador.viewer({
+  id: "mirador",
+  windows: [
+    {
+      manifestId: "https://example.org/manifest.json",
+      canvasId: "https://example.org/manifest/canvas/p5",
+    },
+  ],
+});
+```
+
+Alternatively, publish the target page in the manifest using `start` (Presentation v3) or `startCanvas` (Presentation v2).
+
+## Manifest Rotation Is Ignored
+
+Manifest-declared rotation (such as `ImageApiSelector` rotation or CSS transforms per [Recipe 0040](https://iiif.io/api/cookbook/recipe/0040-image-rotation-service/)) is not automatically applied by Mirador upon load. Image rotation in Mirador is user-driven via the canvas navigation controls or can be preset via workspace window configuration.
 
 ## Book View Is Not Available
 
@@ -39,15 +99,19 @@ to allow book view for a resource without paged behavior, review the configured 
 ## Thumbnails Do Not Load In An Angular Integration
 
 The upstream FAQ notes that Angular’s Zone.js IntersectionObserver patch can interfere with thumbnail
-lazy loading in Mirador 3 integrations. Review Zone.js configuration if you are maintaining that type
-of older integration.
+lazy loading in Mirador integrations. Review Zone.js configuration if you are maintaining that type
+of integration.
 
 ## Annotation HTML Is Sanitized
 
-Mirador sanitizes annotation HTML. Adjust the annotation sanitization rules only after reviewing the
-security implications and the rules available in Mirador core.
+Mirador sanitizes annotation HTML with DOMPurify to prevent XSS attacks. If your custom annotations use safe inline styling or custom elements, adjust the annotation sanitization rules only after reviewing the security implications.
 
-## Source
+## Specification Reference
 
+For a complete breakdown of supported and unsupported features across the IIIF specifications, consult the interactive **[Mirador IIIF Support Matrix](/iiif-support)**.
+
+## Source & Upstream References
+
+- [Mirador IIIF Support Matrix](/iiif-support)
 - [Frequently Asked Questions](https://github.com/projectmirador/mirador/wiki/Frequently-Asked-Questions)
 - [Annotation compatibility support](https://github.com/projectmirador/mirador/wiki/Annotation-compatibility-support)

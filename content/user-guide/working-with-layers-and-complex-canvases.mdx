@@ -16,8 +16,9 @@ Mirador natively supports IIIF Presentation v2 and v3 **Choice resources** and m
 In the IIIF data model:
 
 - A single **Canvas** defines the abstract coordinate space.
-- Multiple **Painting Annotations** or a single **Choice** resource attach different image services to that same canvas.
-- Rather than opening multiple windows to see different light spectra, all captures align to the exact same pixel coordinates.
+- **Multiple Painting Annotations**: Multiple images can be painted onto the same canvas to create composite views or multi-spectral stacks.
+- **Choice Resources**: The manifest offers alternate versions of an image (e.g., natural light vs. X-ray) as choices for the client to render.
+- Rather than opening separate windows to inspect different light spectra, all captures align to the exact same pixel coordinates.
 
 ---
 
@@ -35,6 +36,10 @@ When a loaded manifest includes layered or choice image resources:
 - **Opacity Sliders**: Adjust the opacity slider of any layer from 0% (fully transparent) to 100% (fully opaque). Blending layers at 50% opacity allows you to reveal underdrawings, hidden text, or palimpsest layers beneath the surface pigment.
 - **Layer Stacking Order**: Drag layers up or down in the list to change which image renders on top.
 
+> [!IMPORTANT]
+> **Choice Resource Scope (Images Only)**:
+> In Mirador, Choice resources are supported exclusively for **image layers**. Choice bodies declared on audio/video canvases (such as bitrate or quality alternatives) and text resources are not parsed and provide no selection UI.
+
 ---
 
 ## Working with Multiple Sequences
@@ -43,6 +48,13 @@ Some complex archival objects contain more than one reading order or image seque
 
 - If a manifest declares multiple sequences, Mirador surfaces a sequence selector in the window or sidebar.
 - Switch between sequences to examine alternative curatorial arrangements without losing your zoom state or annotation view.
+
+---
+
+## Emerging Areas: 3D and Georeferenced Maps
+
+- **3D Content**: 3D models (glTF/OBJ) are not currently supported in Mirador. A standardized 3D specification is planned for IIIF Presentation API 4.
+- **Maps & Georeferencing**: Georeferenced IIIF maps (such as OpenLayers or Leaflet integrations) are not supported out of the box in Mirador.
 
 ---
 

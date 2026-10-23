@@ -24,8 +24,11 @@ The standard method for viewing an item from an external repository is using its
 4. Paste the IIIF manifest URL into the field and click **Add**.
 5. Mirador fetches the manifest, validates its JSON-LD structure, adds it to your catalog, and opens it into an active window.
 
+> [!NOTE]
+> **In-Session Catalog State**: The Add Resource catalog is held in application session state rather than a distinct browser route. Refreshing your browser dismisses the catalog dialog and returns you directly to your active viewing windows; click the large **+** button at any time to reopen the catalog.
+
 > [!TIP]
-> **Using URL Parameters**: You can also launch Mirador with a resource pre-loaded by appending the `?iiif-content=` parameter to the viewer URL, for example:
+> **Pre-loading Resources**: While vanilla Mirador standalone does not parse URL query parameters out of the box, hosted integrations (such as the Project Mirador demo embed) accept `?iiif-content=` to load a manifest upon startup:
 > `https://projectmirador.org/embed/?iiif-content=https://view.nls.uk/manifest/1334/7515/133475158/manifest.json`
 
 ---
@@ -50,6 +53,35 @@ Many digital library platforms provide a draggable IIIF badge:
 1. Click and drag the IIIF icon directly from the external website's browser tab or window.
 2. Drag the icon over the Mirador window.
 3. Release the mouse button. Mirador parses the dropped URI and immediately loads the manifest.
+
+---
+
+## Start Canvas & Initial View
+
+When opening a manifest, publishers can declare which canvas should open first:
+
+- **Presentation v2 (`startCanvas`) & v3 (`start`)**: Mirador honors the publisher's chosen start page (e.g., opening directly on the first chapter rather than blank endpapers or binding covers).
+- **Limitation**: Start targets are canvas-level only; temporal offsets (such as starting at a specific timestamp `#t=120` in an audio or video canvas) are not supported.
+
+---
+
+## Deep Linking & Content State Limitations
+
+A frequent requirement in academic research is sharing a link that opens a viewer to an exact viewport, canvas, and spatial region.
+
+> [!IMPORTANT]
+> **Content State API Status**: Mirador does not currently support the IIIF Content State API (no `iiif-content` query parameter parsing in vanilla standalone instances, no base64-encoded state payloads, and no drag-and-drop state import).
+> - **Practical impact**: You cannot share a universal IIIF link that opens Mirador to an exact zoomed coordinate region (`xywh`).
+> - **Deep linking alternatives**: Deep-linking in Mirador works via application configuration (`windows: [{ manifestId, canvasId }]`), session export/import, or by relying on the manifest's declared `start` property.
+
+---
+
+## Institutional Links & Alternate Renderings
+
+Mirador automatically extracts and renders supplementary institutional links declared in the manifest:
+
+- **Homepage Links ([IIIF Recipe 0047](https://iiif.io/api/cookbook/recipe/0047-homepage/))**: "View at institution" links declared on manifests or canvases appear in the Information companion sidebar.
+- **Alternate Renderings**: If a manifest declares downloadable alternate representations (such as a complete book PDF, TEI/XML transcription, or high-resolution TIFF archive), Mirador exposes direct download links in the Information panel.
 
 ---
 

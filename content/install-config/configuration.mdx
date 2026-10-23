@@ -113,6 +113,9 @@ Mirador.viewer({
 The practical distinction matters: deleting a resource from `catalog` does not remove it from
 `windows` if the window is explicitly preloaded.
 
+> [!NOTE]
+> The `catalog` list is in-app Redux state rather than an independent browser route. Refreshing the browser dismisses the Add Resource view and returns users to their workspace; users reopen the catalog using the **+** button.
+
 ## Window Defaults And Per-Window Starts
 
 Global `window` settings define shared behavior. Individual objects inside `windows` can set the
@@ -239,7 +242,7 @@ Mirador.viewer({
 ## Annotation And Search Defaults
 
 Annotation display and search depend first on the loaded IIIF resource. Configuration can further
-shape which annotation motivations appear and which search or sidebar experience users see first.
+shape which annotation motivations appear, how search results interact with the viewer, and which sidebar experience users see first.
 
 ```js
 Mirador.viewer({
@@ -248,8 +251,18 @@ Mirador.viewer({
     htmlSanitizationRuleSet: "iiif",
     filteredMotivations: [],
   },
+  window: {
+    // Automatically navigates the viewport to the first search match canvas (default true)
+    switchCanvasOnSearch: true,
+  },
 });
 ```
+
+### Search Implementation Details
+
+- **Auto-Navigation:** `window.switchCanvasOnSearch` (default `true`) directs Mirador to switch the active canvas to the first search match. Set this to `false` if users should remain on their current canvas until manually selecting a hit.
+- **Snippets:** Search snippets derive entirely from the search service's `hits[]` array (`before`, `match`, and `after`). IIIF search servers that omit the `hits` array will display empty or unlabelled results in the sidebar.
+- **Pagination:** Mirador follows `within.next` links in search responses, accumulating results across pages rather than replacing the active list.
 
 ## Request Hooks
 
@@ -314,8 +327,9 @@ Mirador.viewer({
 
 ## Audio And Video Options
 
-Audio and video settings pass props to the underlying media elements. The defaults enable browser
-controls and use anonymous CORS.
+Canvases containing a IIIF Presentation v3 `duration` property with a painting annotation of body type `Video` or `Sound` render native `<video>` or `<audio>` elements (OpenSeadragon is not initialized for these canvases).
+
+The `audioOptions` and `videoOptions` configuration objects are spread directly onto the underlying HTML5 media elements. Any valid HTML media attribute can be configured:
 
 ```js
 Mirador.viewer({
@@ -327,14 +341,25 @@ Mirador.viewer({
   videoOptions: {
     controls: true,
     crossOrigin: "anonymous",
+    poster: "https://example.org/posters/lecture-thumb.jpg",
+    playsInline: true,
   },
 });
 ```
 
+### Media Sources and Captions
+
+- **Format Fallbacks:** If a manifest lists multiple resource items for a canvas, Mirador renders each as a separate `<source>` element with its `format` attribute as the MIME type (e.g. `video/mp4` and `video/webm`), letting the client browser choose the first supported codec.
+- **VTT Captions:** Supplementing annotations with format `text/vtt` (v3) or caption bodies (v2) are parsed into native `<track>` elements with `language` and `label` properties for browser subtitle rendering.
+- **Streaming Limitation:** Because Mirador relies on native browser HTML5 elements, adaptive bitrate streaming (HLS / MPEG-DASH) is not natively supported out of the box.
+
 ## Authentication Services
 
-Mirador recognizes IIIF Auth service profiles for external, kiosk, clickthrough, and login flows.
-Adjust `auth.serviceProfiles` when your institution needs different handling for protected content.
+Mirador implements IIIF Authentication API 1.0 (and 0.x profile URIs). Authentication is detected when an Image API `info.json` request returns a degraded response (HTTP status 401 with an attached auth service description, triggering `RECEIVE_DEGRADED_INFO_RESPONSE`).
+
+### Profile Priority & Order
+
+The `auth.serviceProfiles` array defines which authentication patterns Mirador recognizes and the priority order in which they are attempted:
 
 ```js
 Mirador.viewer({
@@ -349,6 +374,12 @@ Mirador.viewer({
   },
 });
 ```
+
+- **Evaluation Order:** The default evaluation order is **external → kiosk → clickthrough → login**. Mirador chooses the first matching profile in the array that has not yet been attempted. Profiles not included in `auth.serviceProfiles` are silently ignored.
+- **Non-Interactive Profiles (`external`, `kiosk`):** Fire automatically in the background. Note that if token acquisition fails, these profiles fail silently and the image remains degraded without displaying an error alert.
+- **Interactive Profiles (`clickthrough`, `login`):** Display the `WindowAuthenticationBar` across the bottom of the window with the service's `header`, `description`, and action button. On token failure, the bar displays a **Retry** button with `failureHeader` and `failureDescription` from the auth service.
+- **Token Retrieval (`postMessage`):** For cookie-based authentication, Mirador renders a hidden `<iframe>` pointed at the token service. The token service dispatches the access token back via `postMessage` (handled by Mirador's `AccessTokenSender`), which Mirador caches in Redux and passes via `Authorization` headers on subsequent image requests.
+- **Logout Behavior:** When a manifest provides a logout service, an interactive logout button appears in the authentication bar. Clicking logout launches the logout URL in a popup window, waits 2 seconds to allow the remote server time to invalidate session cookies, and then automatically re-fetches all `info.json` descriptors that used the invalidated token.
 
 ## Accessibility Implementation Checks
 

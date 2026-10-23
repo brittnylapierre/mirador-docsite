@@ -1,6 +1,6 @@
 ---
 title: Working with Protected or Authenticated Resources
-description: Understand how Mirador handles IIIF Authentication API v1 flows, login prompts, and access control.
+description: Understand how Mirador handles IIIF Authentication API v1 flows, login prompts, access control, and the Auth v2 probe service gap.
 ---
 
 # Working with Protected or Authenticated Resources
@@ -11,39 +11,61 @@ To support secure access without breaking interoperability, IIIF defined the [II
 
 ---
 
-## The Four IIIF Authentication Patterns
+## Supported Authentication Profiles (Auth API v1)
 
-Mirador supports all four standardized interaction patterns defined in IIIF Auth v1:
+Mirador supports all four standardized interaction patterns defined in **IIIF Auth API v1**:
 
-### 1. Login Flow (Institutional SSO / Username & Password)
+| Interaction Pattern | Primary Use Case | Mirador User Experience |
+| :--- | :--- | :--- |
+| **Login Flow** | Institutional SSO / CAS / SAML / OAuth | Prompts user with a modal dialog; opens auth portal in a popup; receives access token via `postMessage`. |
+| **Clickthrough Flow** | Terms of service, copyright acknowledgment | Displays in-viewer agreement dialog; unlocks tiles immediately upon clicking "Accept". |
+| **Kiosk Flow** | Physical reading rooms, terminal IP whitelisting | Silent authentication without user credentials or popup interaction. |
+| **External Flow** | Parent website already authenticated | Silent cookie or pre-authenticated session check before loading tiles. |
 
-Used when access requires institutional credentials (e.g., Shibboleth/SAML, CAS, OAuth, or campus credentials):
+---
 
-1. When a user requests a protected resource, Mirador detects the auth service in the manifest.
+## How the Login Flow Works
+
+When access requires institutional credentials:
+
+1. When a user navigates to a protected canvas, Mirador detects the `service` block declared in the manifest or info.json.
 2. A modal dialog prompts the user: *"You must log in to view this material."*
 3. Clicking **Log In** opens the institution's secure login portal in a separate browser popup or tab.
-4. Once authenticated, the popup sends a secure postMessage token back to Mirador and closes.
-5. Mirador reloads the protected deep-zoom image tiles and metadata seamlessly.
+4. Once authenticated, the popup communicates with Mirador via the standardized `token` service using secure `postMessage` messaging, then automatically closes.
+5. Mirador stores the temporary access token in memory and reloads the protected deep-zoom image tiles and metadata seamlessly.
 
-### 2. Clickthrough Flow (Terms of Service / Warnings)
+---
 
-Used when access is open to the public but requires agreeing to conditions of reuse, copyright acknowledgments, or content advisories:
+## The In-Window Authentication Bar
 
-- Mirador presents an in-viewer agreement dialog containing the institution's statement.
-- The user clicks **Agree** or **Accept**.
-- Mirador caches the session token and immediately renders the high-resolution images.
+During interactive authentication flows (Clickthrough and Login), Mirador renders the persistent **Window Authentication Bar** (`WindowAuthenticationBar`) across the bottom of the active window:
 
-### 3. Kiosk Flow (Public Terminals / On-Premise Access)
+- **Institutional Notice**: Displays the service's `header`, `description`, and `confirmLabel` configured by the publishing institution.
+- **Login Action**: Clicking the action button opens the institutional login dialog in a popup window.
+- **Degraded Image Display**: When access is restricted, Mirador renders a low-resolution or watermarked version immediately while initiating the authentication workflow in the background. Users never stare at a blank screen; upon successful authentication, the canvas upgrades to full deep-zoom resolution seamlessly without reloading the page.
+- **Error Feedback & Retry**: If credentials fail or token retrieval encounters an error, the bar updates to show a **Retry** button alongside `failureHeader` and `failureDescription` text returned by the IIIF auth service.
 
-Used in physical library reading rooms or museum exhibition kiosks:
+---
 
-- Automatically obtains authorization based on the terminal's IP address or pre-configured physical session without requiring manual interaction from patrons.
+## Signing Out (The Logout Workflow)
 
-### 4. External Flow
+When an institution provides a logout service (`logout` property in the service block):
 
-Used when the user has already authenticated with the host website before launching the viewer:
+1. Once authenticated, a **Logout** button appears in the window's authentication bar.
+2. Clicking **Logout** opens the institution's logout URL in a popup window.
+3. Mirador pauses for **2 seconds**—giving the remote server sufficient time to invalidate the session cookie.
+4. Mirador then re-fetches all `info.json` descriptors that used the invalidated token.
+5. Active windows reload immediately to the unauthenticated tier, while offscreen canvases update lazily when navigated.
 
-- Mirador attempts a silent cookie/token check. If the parent session is valid, content loads without interrupting the user.
+---
+
+## IIIF Auth API v1 vs. Auth API v2
+
+> [!IMPORTANT]
+> **Auth API v2 (Probe Service) Not Supported in Core**  
+> In IIIF Authentication API version 2.0, the specification replaced the v1 interaction patterns with a unified `probeService` architecture.  
+> As noted in the [Mirador IIIF Support Matrix](/iiif-support), Mirador currently implements **Auth API v1 only**. The Auth v2 probe-service model is not implemented.  
+> If your institution serves IIIF Presentation 3.0 or Image 3.0 assets, ensure your authentication endpoints expose Auth v1 service definitions (`http://iiif.io/api/auth/1/login`, `http://iiif.io/api/auth/1/token`, etc.) alongside or in place of v2 probe services.
 
 ---
 
@@ -60,5 +82,7 @@ Modern browsers (Chrome, Firefox, Safari) enforce strict third-party cookie rest
 
 ## Authentication Troubleshooting
 
+- **Image Stays Blurry with No Login Prompt (Silent Failure)**: If an image remains in a low-resolution blurry state without prompting you to log in, the publisher likely uses the `external` or `kiosk` authentication profile. Because these profiles run silently in the background, token failures do not display an error message. Try signing into your institution's portal in another tab, clear your browser cookies, or reload the page.
 - **"Forbidden" or Grey Tile Errors**: Indicates that the image server rejected the access token or the session has expired. Click the user icon or reload the window to trigger a new login prompt.
 - **Degraded Tiers**: Some institutions grant a low-resolution thumbnail to anonymous users, with full deep-zoom resolution unlocked upon logging in. Mirador will prompt you to log in to access the full-resolution tier.
+- **Login Loop**: If the login popup closes but Mirador still shows the login prompt, check your browser's console for cross-origin `postMessage` blocking or CORS origin misconfigurations on the token endpoint.

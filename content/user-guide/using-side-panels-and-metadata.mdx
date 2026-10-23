@@ -27,6 +27,10 @@ The **Information** tab (represented by the `ⓘ` icon) presents cataloging and 
   - *Repository*: National Library of Scotland
 - **Canvas Metadata**: Specific metadata applicable only to the active page or sheet (e.g., specific folio numbers, transcription notes, or dimensions).
 - **Related Links**: Direct URLs to catalog records, institutional holding pages, or alternative downloadable formats.
+- **"Show Collection" Navigation**: When an item was opened after browsing a collection, a **Show collection** button appears in the Information panel header to quickly return you to the parent collection browser. (This button is absent when opening manifests directly by URL, as no collection path is present in Mirador's session state.)
+
+> [!TIP]
+> **Multilingual Metadata Picker**: If the publisher provides metadata in multiple languages (using IIIF v3 language maps or v2 language arrays), a language selector appears at the top of the Information panel. This allows you to toggle metadata between available languages independently of Mirador's interface language.
 
 ---
 
@@ -63,6 +67,11 @@ The **Annotations** tab (represented by the speech bubble icon) manages all anno
 - Lists all annotations targeting the visible page or specific regions within it.
 - Allows researchers to inspect transcription text, historical commentary, or object tags.
 - Toggles visibility of annotation bounding boxes and SVG highlight polygons on the canvas.
+
+> [!NOTE]
+> **The Orange Indicator Dot**: Notice the small orange dot that sometimes appears on the Annotations tab icon:
+> - **Dot Present**: Annotations have been successfully loaded for the *currently active canvas*.
+> - **Dot Absent**: The manifest may contain annotations elsewhere in the work, but none are present or currently loaded on the page you are viewing.
 
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: Searching and Finding Content
-description: Execute full-text in-manifest search and navigate to matching canvas hits in Mirador.
+description: Execute full-text in-manifest search, inspect hit snippets, and navigate to matching canvas coordinates in Mirador.
 ---
 
 # Searching and Finding Content
@@ -27,7 +27,8 @@ When a manifest declares an active IIIF Content Search service:
 
 The Search panel organizes hits logically by page and occurrence:
 
-- **Hit Snippets**: Results display contextual text snippets surrounding your search terms to help you evaluate relevance before opening the page.
+- **Hit Snippets**: Results display contextual text snippets surrounding your search terms (`before`, `match`, and `after` segments from the server's `hits[]` array) to help you evaluate relevance before opening the page.
+- **Snippet Quality Variations**: Snippet detail depends on the publishing institution's search backend—some servers return complete sentence context, while others return only the bare keyword match or omit `hits` altogether.
 - **Canvas Target**: Each result indicates the specific canvas label and page number where the match occurs.
 - **Visual Overlays**: When a search result is selected, Mirador navigates the canvas directly to that page and draws a highlighted bounding box over the exact word coordinates (via IIIF fragment coordinates `xywh`).
 
@@ -35,8 +36,10 @@ The Search panel organizes hits logically by page and occurrence:
 
 ## Navigating Through Results
 
+- **Automatic First Match Navigation**: By default, Mirador automatically jumps the canvas viewport to the very first matching search result as soon as query results return. (Implementers can disable this via `window.switchCanvasOnSearch: false` if preferred.)
 - **Click to Jump**: Click any result in the sidebar list to center the viewer onto that canvas and zoom into the matching text segment.
 - **Sequential Stepping**: Use result forward and back arrows to step through occurrences in sequence across the work.
+- **Result Pagination & Accumulation**: For queries with dozens or hundreds of matches, results load in pages. Click **Load more** at the bottom of the list to fetch subsequent batches (following `within.next`). Mirador accumulates newly fetched hits at the bottom without replacing earlier results.
 - **Combining with Gallery View**: Switch to **Gallery View** (`⊞`) while a search is active to see visual indicators on thumbnails of every page that contains matching search terms.
 
 ---
@@ -45,14 +48,33 @@ The Search panel organizes hits logically by page and occurrence:
 
 If the providing institution's search endpoint includes an autocomplete service:
 
-- As you begin typing in the search box, Mirador displays a dropdown menu of matching terms and phrases indexed within the document.
-- Click any suggested term to execute the search immediately.
+- As you begin typing in the search box, Mirador queries the autocomplete service and displays a dropdown menu of matching terms and phrases indexed within the document.
+- Click any suggested term to populate the query and execute the search immediately.
+- Autocomplete services conforming to IIIF Content Search API v1 (`http://iiif.io/api/search/1/autocomplete`) are fully supported.
+
+---
+
+## Search Specification Compatibility
+
+Mirador's search client is built specifically for the **IIIF Content Search API version 1.0 and 0.9**:
+
+| Search Feature | Status | Details & Requirements |
+| :--- | :--- | :--- |
+| **Search API v1 / v0** | ✅ Supported | Queries services with profile `http://iiif.io/api/search/1/search` or `http://iiif.io/api/search/0/search`. Parses standard Open Annotation hit structures. |
+| **Autocomplete (v1)** | ✅ Supported | Type-ahead suggestions via declared autocomplete child services. |
+| **Search API v2** | ❌ Not supported | The IIIF Search API v2 re-alignment (which uses Presentation v3 / W3C Web Annotation response shapes) is **not parsed** by Mirador's search client. Mirador expects v1/v0 JSON response schemas. |
+
+> [!TIP]
+> If your repository publishes IIIF Presentation 3.0 manifests with OCR search, ensure that your `service` block references a **Search API v1** endpoint or maintains backwards-compatible v1 response structures. For more details, consult the [Mirador IIIF Support Matrix](/iiif-support).
 
 ---
 
 ## Troubleshooting Search
 
 - **Why is the Search tab missing?**
-  The Search tab only appears when the loaded IIIF manifest declares a `service` block conforming to the IIIF Content Search API (`http://iiif.io/api/search/1/search` or `http://iiif.io/api/search/0/search`). If the digitized object does not have OCR or an active search service configured by the publisher, search is unavailable.
-- **Search API v2 Support**:
-  Mirador natively parses Content Search API v1 and v0 services. Review the [Mirador IIIF Support Matrix](/iiif-support) for details on search protocol compatibility.
+  The Search tab only appears when the loaded IIIF manifest declares a valid `service` block conforming to the IIIF Content Search API. If the digitized object does not have OCR or an active search service configured by the publisher, the tab is hidden.
+- **Why are search queries returning no results or failing silently?**
+  Open your browser developer tools (Network tab) and verify the search endpoint URL. Ensure that:
+  1. The endpoint returns `Content-Type: application/json` or `application/ld+json`.
+  2. CORS headers (`Access-Control-Allow-Origin: *`) are properly configured on the search server.
+  3. The response body conforms to the Search v1 shape rather than Search v2.

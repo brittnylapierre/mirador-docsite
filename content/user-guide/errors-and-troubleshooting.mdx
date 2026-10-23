@@ -73,3 +73,34 @@ Before opening an issue or contacting repository administrators, run through thi
 1. **Test in the Official Live Demo**: Try loading the manifest in the [Mirador Live Demo](https://projectmirador.org/demo/). If it fails there as well, the issue is with the manifest or remote server, not your local setup.
 2. **Inspect the Console**: Press `Ctrl+Shift+I` (or `Cmd+Option+I` on Mac) and check the **Console** tab for red error messages.
 3. **Check the Specification Matrix**: Review the [Mirador IIIF Support Matrix](/iiif-support) to verify whether the feature or API version you are attempting to use is supported.
+
+---
+
+## Frequently Asked Questions
+
+### Why did the "Add resource" list disappear after refreshing the page?
+The resource catalog overlay is part of Mirador's in-session application state rather than a separate browser route. Refreshing the browser returns you to your open workspace windows; click the large **+** button in the control bar to reopen the resource catalog.
+
+### I changed the app language, but the item's metadata didn't change. Why?
+The app interface language (menus, dialogs, buttons) and the item's metadata language are configured separately. Check the item's **Information panel** for a language picker dropdown. It appears only when the publishing institution supplies metadata in multiple languages. If an app language is selected that the manifest also offers, Mirador aligns them automatically.
+
+### Why don't I see a Book view option?
+Book view (facing spreads) appears in the view menu only when the publisher designates the item as paged in its IIIF manifest (`behavior: ["paged"]` in v3 or `viewingHint: "paged"` in v2). For single-sheet images, maps, or scrolls, Book view is hidden by default.
+
+### What does the orange dot on the annotations tab mean?
+An orange dot on the Annotations tab indicates that annotations have been fetched and loaded for the *current page*. If the tab appears without an orange dot, the manifest contains annotations somewhere in the item, but none are currently loaded on the active canvas.
+
+### Why is there no search tab for my item?
+The companion Search tab appears only when the publishing institution runs a compatible IIIF Content Search API v1 service and declares it in the manifest's `service` block. Without OCR text and a declared search endpoint, search is unavailable.
+
+### A restricted image stays blurry and nothing prompts me to sign in. What happened?
+Your institution's manifest may use silent single sign-on authentication (`external` or `kiosk` profiles). When background token requests fail (e.g., expired cookie, third-party cookie blocking, or network error), these silent profiles fail quietly without a visible prompt. Try logging into your institution's portal in another tab, or reload the page after enabling third-party storage access.
+
+### Why is the "Show collection" button missing?
+The **Show collection** button appears in the window sidebar only when you arrived at the manuscript by browsing down through a IIIF Collection hierarchy. If you opened the manifest directly by pasting its URL, Mirador does not have a parent collection path in state, so the button is not displayed.
+
+### Why does zooming reset when I turn pages in Book view?
+In Book view, Mirador currently resets pan and zoom coordinates back to default whenever facing pages turn. Additionally, facing-page centering can adjust slightly if adjacent folios have differing aspect ratios or margins.
+
+### Can I edit an exported workspace JSON file?
+The exported workspace file is a raw snapshot of Mirador's internal configuration state and is not validated on import. You can edit it to adjust manifest URLs or layout parameters, but do so with care to preserve JSON formatting and valid IDs.

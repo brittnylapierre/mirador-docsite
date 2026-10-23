@@ -57,8 +57,17 @@ Mirador features community-maintained translations for over 20 languages:
 2. Click **Language**.
 3. Choose your preferred language from the list. All UI labels, tooltips, dialogs, and button descriptions will update immediately.
 
+### Two Interacting Language Systems
+
+Mirador coordinates two distinct language systems:
+
+- **App Language**: The language of Mirador's menus, buttons, companion headers, and dialogs.
+- **Manifest Language**: The language of the digitized item's titles, summaries, metadata pairs, and annotations, as authored by the holding institution.
+
+If a manifest provides descriptive metadata in multiple languages, a language dropdown appears inside the **Information** panel (`ⓘ`). Choosing an app language that the manifest also offers will automatically select that language in the manifest metadata dropdown.
+
 > [!NOTE]
-> Changing the interface language localizes Mirador's application UI (tooltips, buttons, menus). It does not translate the metadata or text within the IIIF manifest itself, which remains in the languages supplied by the publishing institution. If a manifest provides multi-language metadata, Mirador will display the metadata matching your chosen locale if available.
+> State alignment between app language and manifest metadata language can occasionally experience stale-state synchronization in complex workspaces. You can always manually choose your preferred metadata language using the dropdown in the Information companion sidebar.
 
 ---
 
@@ -72,12 +81,19 @@ For presentations or uncluttered visual viewing:
 
 ---
 
-## Right-to-Left (RTL) Reading Support
+## Right-to-Left (RTL) Reading & Interface Support
 
-Many cultural heritage materials (such as Hebrew, Arabic, Persian, and traditional East Asian manuscripts) are read from right to left:
+Mirador provides comprehensive right-to-left support, maintaining a strict distinction between **interface layout** and **content viewing direction**:
 
-- When a IIIF manifest declares `"viewingDirection": "right-to-left"`, Mirador automatically configures its navigation:
-  - In **Book View**, the sequence opens from right to left, with the first page on the right side of the spread.
-  - The canvas forward navigation arrow (`>`) steps in the proper reading direction.
-  - The thumbnail filmstrip orders canvases according to the manuscript's natural reading flow.
-- When an RTL interface language (such as Arabic or Hebrew) is selected, Mirador flips the workspace UI and sidebar orientations to follow RTL conventions.
+- **UI Layout Direction**: When you select an RTL interface language (such as Arabic or Hebrew), Mirador flips the entire Material UI interface—the workspace control bar, window sidebars, toolbars, and dialog layouts invert horizontally to follow RTL conventions.
+- **Viewing Direction (Independent of UI Language)**: A manifest's declared `viewingDirection` (`right-to-left`) controls page navigation arrows, thumbnail filmstrip ordering, and facing-page layouts in Book View. A researcher viewing a Hebrew manuscript within an English-language UI will still navigate pages right-to-left with correct recto/verso page spreads.
+
+---
+
+## Optional Toolbar Tools
+
+Depending on how your institution configures Mirador, additional toolbars and modal dialogs may be available in the window:
+
+- **Image Tools Toolbar (`mirador-image-tools`)**: A floating horizontal toolbar above the canvas providing interactive tools to rotate (90° steps), flip horizontally/vertically, and fine-tune brightness, contrast, and saturation sliders in real time. Can be collapsed with the `✕` icon or hidden via the window menu.
+- **Share Dialog (`mirador-share-plugin`)**: Surfaces a shareable link, responsive `<iframe>` embed snippet, draggable IIIF badge, and a copy button for the raw manifest URI.
+- **Download Modal (`mirador-download-plugin`)**: Enables downloading high-resolution image crops or entire rendered artifacts (such as OCR text files or PDFs).

@@ -27,6 +27,9 @@ To open multiple objects in your workspace:
    - **Add New Manifest by URL**: Paste the URL of any valid IIIF Presentation Manifest (e.g., `https://view.nls.uk/manifest/1336/8006/133680060/manifest.json`) into the text input and click **Add**.
 4. Once selected, Mirador automatically tiles the new window beside your existing window.
 
+> [!TIP]
+> **In-Session Catalog State**: The "Add resource" catalog overlay is an in-memory application state rather than a separate browser route. If you reload your browser, Mirador returns directly to your active workspace windows. Click the `＋` button at any time to reopen the catalog.
+
 ---
 
 ## Workspace Layouts: Mosaic vs. Elastic
@@ -42,6 +45,7 @@ To switch between layout modes, click the **Workspace settings** icon (`⚙`) in
 **Mosaic mode** is the default layout. It organizes windows into clean, non-overlapping rows and columns:
 
 - Windows automatically resize to share the screen equally (e.g., 50/50 split for two windows, 2x2 grid for four windows).
+- Drag any window's title bar onto another window to swap their positions within the grid.
 - Dividers between windows can be dragged horizontally or vertically to adjust the proportions of each pane.
 - Perfect for side-by-side comparative inspection of two book volumes, historical editions, or paleographic hand comparisons.
 
@@ -54,22 +58,22 @@ To switch between layout modes, click the **Workspace settings** icon (`⚙`) in
 - Drag the edges and corners of windows to customize dimensions independently.
 - Pan and zoom the entire workspace canvas to manage large numbers of open resources simultaneously.
 
+#### Finding Hidden Windows with "Jump to Window"
+
+In Elastic mode, open windows can overlap and obscure one another. Mirador provides a **Jump to window** button in the control bar with a numeric badge indicating how many windows are currently open:
+- Click the **Jump to window** button to display a dropdown list of all active windows and their manifest titles.
+- Select any window from the list to immediately bring it to the foreground and center it in your workspace view.
+
 ---
 
 ## Managing Individual Windows
 
 Each window in the workspace operates independently, with its own zoom level, pan position, canvas sequence, and sidebar state.
 
-### Maximizing a Window
+### Maximizing a Window vs. Workspace Fullscreen
 
-When you need to focus on a single object in full detail without closing your other windows:
-
-1. Click the **Maximize window** button (`□`) in the window's top-right header.
-2. The selected window expands to fill the entire workspace viewport:
-
-![Window Maximized](/img/user-guide/nls-window-maximized.png)
-
-3. To return to your multi-window layout, click the **Restore window** button (`⧉`). All other windows return to their previous positions and zoom states.
+- **Maximize Window (`□`)**: Click the maximize button in the window's top-right header to expand just that window across the workspace viewport. Click **Restore window** (`⧉`) to restore the multi-window tiled layout.
+- **Workspace Fullscreen**: Click the fullscreen icon in the vertical workspace control bar to expand the entire multi-window desktop across your physical monitor. Press `Esc` or click the exit-fullscreen icon to return to normal browsing.
 
 ### Closing a Window
 
@@ -91,3 +95,6 @@ Mirador allows you to preserve your multi-window comparative setup:
 1. Click the **Workspace options** button (`⋮`) in the workspace control panel.
 2. Choose **Export workspace** to download or copy a JSON configuration string of your exact layout, open manifests, canvas indices, and viewport coordinates.
 3. To reload a previously saved session or share it with a colleague, click **Import workspace** and paste the JSON configuration.
+
+> [!WARNING]
+> **Raw JSON State**: The exported workspace file is a snapshot of Mirador's internal Redux state configuration and is not strictly validated upon import. If you manually edit the JSON before importing, take care to preserve valid syntax, manifest URLs, and window IDs.

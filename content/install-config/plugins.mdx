@@ -50,6 +50,46 @@ The exact API surface differs between Mirador versions, but the concepts remain 
 - **Add plugins:** inject new UI into a defined plugin target.
 - **Wrap plugins:** replace, surround, or alter the props of an existing Mirador component.
 
+## Extension Points
+
+Mirador's plugin architecture provides four primary extension points:
+
+1. **Companion Panels:** Inject new tabs into the companion sidebar alongside Information, Rights, Index, Annotations, and Search.
+2. **Menu Items and Controls:** Add buttons, toggles, or menus across workspace control bars and individual window headers.
+3. **Component Overrides (`wrap` / `add`):** Augment or completely replace core React components in the render tree.
+4. **State Management:** Register custom Redux reducers, actions, and sagas to manage sophisticated plugin application state.
+
+---
+
+## Core Community Plugins
+
+The Mirador community maintains several widely adopted plugins that demonstrate these extension points:
+
+### 1. `mirador-image-tools`
+Core Mirador can read canvas rotation and flip settings from configuration, but does not provide an interactive manipulation toolbar. The `mirador-image-tools` plugin provides:
+- A collapsible horizontal toolbar over the active canvas.
+- Dynamic rotation (90° increments) and horizontal/vertical flipping.
+- Real-time CSS filter adjustments: brightness, contrast, and saturation sliders.
+- Invert colors and grayscale view options.
+
+### 2. `mirador-share-plugin`
+Provides a sharing dialog accessed from the window top bar:
+- Direct shareable link to the digital object.
+- Responsive HTML `<iframe>` embed code with configurable dimensions.
+- Draggable IIIF logo badge for dragging manifests into external IIIF viewers.
+- One-click copy for the raw IIIF manifest URI.
+
+### 3. `mirador-download-plugin`
+Adds a download modal to the window header:
+- Multi-resolution image downloads (full, large, medium, thumbnail).
+- Direct access to downloadable manifest representations and attachments (such as OCR plain text or PDF renderings).
+
+> [!IMPORTANT]
+> **Annotation Authoring Status (`mirador-annotations`)**:
+> While Mirador 4 natively displays and navigates annotations, in-viewer annotation creation historically relied on the community `mirador-annotations` plugin. This plugin was not maintained through the Mirador 4 upgrade; projects requiring interactive annotation drawing or authoring must build custom plugins targeting Mirador 4.
+
+---
+
 ## Existing Plugin Example
 
 Image tools are a useful example of installing a plugin package and enabling plugin-specific window

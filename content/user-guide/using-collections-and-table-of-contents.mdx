@@ -34,12 +34,19 @@ To browse and select items from a loaded collection:
 
 ![Add Resource Catalog with NLS Collection](/img/user-guide/nls-add-resource-catalog.png)
 
-3. Click on the collection entry (*Manuscripts containing Middle English texts*) to expand its constituent manuscripts.
-4. Click any manuscript (such as *Mandeville's travels*) to open it in an active window.
+3. Click on the collection entry (*Manuscripts containing Middle English texts*) to open the collection browser dialog.
+4. Inside the collection browser:
+   - **Filter Items**: Use the search filter box at the top to filter items by typing part of a title.
+   - **Descend & Ascend**: Click any nested sub-collection to descend into its members; click the **Back** button to climb one level up.
+   - **Inspect Details**: View the collection's title, description, and rights metadata.
+5. Click any manuscript (such as *Mandeville's travels*) to open it in an active window.
+
+> [!TIP]
+> **The "Show Collection" Button**: After opening an item through a collection dialog, a **Show collection** button appears in the window sidebar, allowing you to quickly return to browsing the collection. Items opened directly by pasting their manifest URL will not show this button because Mirador does not have a parent collection path in its session state.
 
 ---
 
-## Navigating Manifest Structure & Table of Contents
+## Navigating Manifest Structure & Table of Contents (Ranges)
 
 Once an individual manuscript is opened, you can navigate its structural organization (folios, chapters, sections) via the **Index** companion sidebar.
 
@@ -51,7 +58,17 @@ Once an individual manuscript is opened, you can navigate its structural organiz
 2. Select the **Index** tab (represented by the book/list icon) in the sidebar tab bar.
 3. The Index panel displays the sequential list of all 370 folios in the manuscript.
 4. Scroll through the list and click any folio (such as **Page 8** or **Page 9**) to jump the viewer directly to that canvas.
-5. In manifests that declare structural ranges (TOC), nested chapter and section headings appear in a collapsible tree structure.
+5. In manifests that declare structural ranges (`structures` / `Range`), nested chapter and section headings appear in a collapsible tree structure, allowing chapter-level jumping without scrolling through hundreds of pages.
+
+---
+
+## Chronological Navigation & `navDate` Limitation
+
+Some collections and multi-part documents assign date stamps to canvases using the IIIF `navDate` property (e.g. newspaper runs, diary entries, or photo archives).
+
+> [!NOTE]
+> **Timeline Navigation ([IIIF Recipe 0230](https://iiif.io/api/cookbook/recipe/0230-navdate/))**:
+> While the IIIF specification supports `navDate` for timeline-based navigation and chronological filtering, Mirador currently ignores `navDate` values on canvases. Navigation through multi-page objects is strictly structural (via the Index or TOC) or sequential.
 
 ---
 

@@ -1,11 +1,11 @@
 ---
 title: Working with Annotations
-description: View, inspect, and toggle canvas annotations, transcriptions, and commentary in Mirador.
+description: View, inspect, and toggle canvas annotations, transcriptions, and commentary in Mirador, with details on collection handling and authoring plugins.
 ---
 
 # Working with Annotations
 
-In the IIIF ecosystem, annotations are first-class citizens. Annotations link commentary, scholarly transcriptions, translations, visual highlights, and tags to specific canvases or spatial coordinate regions (`xywh` or SVG polygons).
+In the IIIF ecosystem, annotations are first-class citizens. Annotations link commentary, scholarly transcriptions, translations, visual highlights, and tags to specific canvases or spatial coordinate regions (`xywh` rectangular fragments or SVG polygons).
 
 Mirador renders annotations seamlessly over the image canvas while providing a structured list in the companion sidebar.
 
@@ -20,6 +20,11 @@ When a loaded manifest includes linked `AnnotationList` (Presentation v2) or `An
 1. Click the **Toggle sidebar** button (`☰`) in the window header.
 2. Select the **Annotations** tab (speech bubble icon).
 3. The Annotations panel lists all annotations associated with the active canvas.
+
+> [!TIP]
+> **The Orange Indicator Dot**:
+> - An **orange dot** on the Annotations tab icon indicates that annotations have successfully loaded for the page you are currently viewing.
+> - If the tab icon appears **without an orange dot**, the item may contain annotations elsewhere in the manifest, but none are present or currently fetched for the active canvas.
 
 ---
 
@@ -43,9 +48,26 @@ Mirador supports standard W3C Web Annotation and Open Annotation data models:
 
 ---
 
-## Annotation Collections & External Annotation Servers
+## Annotation Collections & Pagination Handling
 
-Institutions often host annotations on external annotation servers (such as Elucidate or custom backends) or link them via paginated `AnnotationCollection` records.
+Institutions often publish annotations grouped into `AnnotationCollection` resources or across paginated `AnnotationPage` records:
+
+| Feature | Status | Behavior in Mirador |
+| :--- | :--- | :--- |
+| **Annotation Display** | ✅ Supported | Rectangles, polygon fragments, and SVG selectors render accurately over the canvas. |
+| **Annotation Collections** | ⚠️ Partial | Linked `AnnotationCollection` pages load, but collection-level labels are not displayed in the sidebar—annotations are **flattened** into a single continuous list. Paginated multi-page collections are not fully navigated ([GitHub Issue #589](https://github.com/ProjectMirador/mirador/issues/589)). |
+| **Annotation Authoring** | ❌ Not in core | In-viewer drawing, tagging, and creating new annotations is not part of Mirador 4 core. |
 
 > [!NOTE]
-> Mirador renders and navigates pre-existing annotations published with manifests. For in-viewer annotation creation, drawing tools, and authoring workflows, community plugins (such as `mirador-annotations`) can be integrated. Consult the [Plugins Guide](/install-config/plugins) for implementation details.
+> **HTML Sanitization**: To protect users from cross-site scripting (XSS), Mirador automatically sanitizes HTML content inside annotation bodies using DOMPurify. Raw `<script>` tags, dangerous `<iframe>` elements, or inline event handlers (`onclick`) are stripped prior to display.
+
+---
+
+## Creating Annotations (Authoring Plugins)
+
+Mirador core is purposefully focused on **rendering, inspecting, and navigating** annotations rather than authoring them:
+
+- In Mirador 2 and 3, interactive annotation authoring was enabled by the community-developed `mirador-annotations` plugin.
+- The `mirador-annotations` plugin was not maintained through the Mirador 4 upgrade.
+- If your project requires annotation authoring (e.g., drawing bounding boxes, submitting transcriptions to a backend like SimpleAnnotationServer or Elucidate), you will need to build or adapt a custom plugin using Mirador's Redux action and plugin architecture.
+- For reference on creating custom plugins, see the [Plugins Guide](/install-config/plugins) and the [Mirador IIIF Support Matrix](/iiif-support).

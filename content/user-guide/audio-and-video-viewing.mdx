@@ -1,6 +1,6 @@
 ---
 title: Audio and Video Viewing
-description: Play and navigate IIIF Presentation v3 time-based audio and video media in Mirador.
+description: Play and navigate IIIF Presentation v3 time-based audio and video media in Mirador, including WebVTT captions and known limitations.
 ---
 
 # Audio and Video Viewing
@@ -23,6 +23,12 @@ When you open a manifest containing audio or video canvases:
   - **Volume & Mute**: Adjust output sound level or silence audio.
   - **Fullscreen (Video)**: Expand video playback to fill the display.
 
+> [!NOTE]
+> Mirador relies on the host browser's native `<video>` and `<audio>` elements. Media files must be encoded in browser-compatible formats such as MP4 (H.264/AAC), WebM (VP8/VP9/Opus), MP3, AAC, or WAV. Publishers can declare multiple format options; Mirador renders these as `<source>` elements, allowing your browser to select the first codec it supports. Adaptive bitrate streaming protocols like HLS (`.m3u8`) or MPEG-DASH (`.mpd`) are not supported out of the box and require custom video player plugins.
+
+> **The Architectural Pattern:**
+> Mirador handles A/V *playback* reliably, but not A/V *time-based structure*. If your manifests depend on timestamps—such as segmented oral histories, timed annotations, or automated playlists—Mirador currently will not honor them.
+
 ---
 
 ## Captions and Subtitles (WebVTT)
@@ -30,8 +36,13 @@ When you open a manifest containing audio or video canvases:
 Mirador supports synchronized captions and subtitles declared as supplementing annotations:
 
 - When a video manifest includes a WebVTT file (`text/vtt`) attached as an annotation with `"motivation": "supplementing"`, Mirador displays the native subtitle toggle.
-- Captions synchronize automatically with video playback.
+- Captions synchronize automatically with video playback using the browser's built-in text track engine.
 - Multiple subtitle tracks (e.g., different languages or descriptions for the hearing impaired) can be selected via the player controls.
+
+### Plain Text & HTML Transcripts
+
+> [!WARNING]
+> While WebVTT (`text/vtt`) supplementing annotations are fully supported, full text or HTML transcripts supplied as `text/plain` or `text/html` supplementing annotations are **not** currently rendered by Mirador's player panel. If your workflow relies on synchronized paragraph transcriptions, consider packaging them as WebVTT cues or using a dedicated AV viewer integration.
 
 ---
 
@@ -45,14 +56,17 @@ Because Mirador is a multi-window workspace, you can combine time-based media wi
 
 ---
 
-## Current A/V Capabilities & Limitations
+## Known Time-Based Media Limitations
 
-Mirador's time-based media support adheres to the current [Mirador IIIF Support Matrix](/iiif-support):
+When preparing audio and video manifests for Mirador, be aware of the following specification boundaries documented in the [Mirador IIIF Support Matrix](/iiif-support):
 
-| Capability | Status | Details |
-| :--- | :--- | :--- |
-| **Native HTML5 Playback** | ✅ Supported | Plays any format natively supported by your browser (e.g., MP4/H.264, WebM, MP3, AAC, WAV). |
-| **Synchronized VTT Captions** | ✅ Supported | WebVTT supplementing annotations render as native browser captions. |
-| **HLS / Adaptive Streaming** | ❌ Not supported | Adaptive bitrate video streams (such as `.m3u8` or MPEG-DASH) require custom plugins. |
-| **Temporal Media Fragments** | ❌ Not supported | Fragment targets (e.g., `#t=120,180`) on canvases are currently ignored. |
-| **Accompanying Canvases** | ❌ Not supported | Secondary synchronized canvases (e.g., sign language video alongside main lecture) are not yet integrated. |
+| Capability | Status | Practical Impact | Specification Reference |
+| :--- | :--- | :--- | :--- |
+| **Native HTML5 Playback** | ✅ Supported | Plays any format natively supported by your browser (MP4, WebM, MP3, WAV). | [IIIF Presentation 3.0](https://iiif.io/api/presentation/3.0/) |
+| **Synchronized VTT Captions** | ✅ Supported | WebVTT supplementing annotations render as native browser subtitles. | [IIIF Cookbook](https://iiif.io/api/cookbook/) |
+| **HLS / MPEG-DASH Streaming** | ❌ Not supported | Adaptive bitrate video streams cannot be played natively without custom plugins. | — |
+| **Non-VTT Transcripts** | ❌ Not supported | `text/plain` and `text/html` transcripts are ignored by the UI. | — |
+| **Temporal Media Fragments** | ❌ Not supported | Fragment targets (e.g. `#t=120,180` or `#t=60`) on canvases are ignored. Mirador cannot jump to specific timestamps from TOC ranges or render time-targeted annotations. | [W3C Media Fragments 1.0](https://www.w3.org/TR/media-frags/) |
+| **Auto-Advance & Repeat** | ❌ Not supported | Presentation v3 playlist-style `auto-advance` and `repeat` behaviors are not handled. Tracks stop when finished. | [IIIF Presentation 3.0 Behaviors](https://iiif.io/api/presentation/3.0/#behavior) |
+| **Accompanying Canvases** | ❌ Not supported | Secondary synchronized canvases (such as a sign-language video alongside a lecture) are not rendered. | [Cookbook Recipe 0014](https://iiif.io/api/cookbook/recipe/0014-accompanyingcanvas/) |
+| **A/V Choice Resources** | ❌ Not supported | The Choice UI only activates for images. Alternative audio/video bitrates or camera angles declared via Choice bodies are not exposed. | — |

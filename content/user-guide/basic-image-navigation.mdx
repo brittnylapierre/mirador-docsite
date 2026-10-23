@@ -39,6 +39,14 @@ To explore different folios or margins while zoomed in:
 - **Click and Drag**: Click anywhere on the canvas and drag to pan across the manuscript leaf.
 - **Arrow Keys**: Use `Up`, `Down`, `Left`, and `Right` arrow keys to pan incrementally.
 
+### Image Rotation & Manifest-Declared Rotation
+
+Users can rotate canvases interactively when rotation controls or keyboard commands are enabled:
+
+> [!NOTE]
+> **Manifest-Declared Rotation ([IIIF Recipe 0040](https://iiif.io/api/cookbook/recipe/0040-image-rotation-service/))**:
+> The IIIF specification allows manifests to request initial image rotation (via `ImageApiSelector` rotation or CSS stylesheets). Mirador ignores these manifest-level rotation directives; users can rotate images manually via viewer controls, but a manifest cannot force initial rotation.
+
 ---
 
 ## Window View Modes
@@ -63,7 +71,15 @@ To switch view modes, click the **Window views & thumbnail display** button (`�
 
 - Mirador automatically preserves page sequencing and rectos/versos.
 - When navigating forward or backward, two pages turn simultaneously.
-- If the manifest declares a `viewingDirection` of `right-to-left`, Mirador arranges the facing pages and navigation direction accordingly.
+
+> [!NOTE]
+> **Book View Behavior**: In Book view, pan and zoom positions reset when turning pages, and centering may adjust slightly to accommodate differing canvas aspect ratios. Book view appears as an option in the menu only when the publishing institution designates the item as paged in its manifest (`behavior: ["paged"]` in v3 or `viewingHint: "paged"` in v2).
+
+#### Viewing Direction Support
+Mirador supports all four standardized IIIF `viewingDirection` values:
+- `left-to-right`: Default Western reading order.
+- `right-to-left`: Used for Hebrew, Arabic, Persian, and traditional East Asian bindings. Mirador flips the spread order and pagination controls.
+- `top-to-bottom` & `bottom-to-top`: Supported for vertical scrolls and accordion codices.
 
 ### 3. Gallery View (Thumbnail Grid)
 
@@ -97,6 +113,16 @@ At the bottom of the canvas viewport, the canvas navigation bar provides:
 - **Previous item (`<`)**: Steps backward to the previous canvas (e.g., from Page 9 back to Page 8).
 - **Next item (`>`)**: Steps forward to the next canvas (e.g., from Page 8 to Page 9).
 - **Canvas Indicator (`8 of 370 • 8`)**: Displays the current position and total canvas count within the active manuscript sequence.
+
+---
+
+## Optional Window Tools
+
+Institutions frequently extend Mirador with community toolbar plugins. If enabled by your institution, these appear in the window header or directly over the canvas:
+
+- **Image Tools (`mirador-image-tools`)**: An interactive toolbar positioned across the top of the canvas offering controls to rotate (in 90° increments), horizontally/vertically flip, invert colors, and fine-tune image brightness, contrast, and saturation sliders. Click `✕` to collapse the toolbar, or toggle its visibility from the window top-bar menu.
+- **Share (`mirador-share-plugin`)**: Opens a modal dialog providing a direct link to the item, an HTML `<iframe>` embed snippet with configurable dimensions, a draggable IIIF badge to drop the object into other IIIF tools, and a copy button for the raw manifest URI.
+- **Download (`mirador-download-plugin`)**: Opens a download dialog offering multiple image export sizes (full resolution, large, medium, thumbnail) and associated artifacts published with the manifest (such as PDF representations or OCR plain text).
 
 ---
 

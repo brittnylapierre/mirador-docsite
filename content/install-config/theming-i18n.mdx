@@ -126,11 +126,35 @@ Mirador.viewer({
 Adding a new language requires a locale directory, a translated `translation.json`, and registration
 in Mirador’s i18n resources. Plugin authors should use the translation hooks re-exported by Mirador.
 
-## Right-To-Left Interfaces
+## The Two Interacting Language Systems
 
-Handle right-to-left reading as both an interface concern and a resource-data concern. Localized UI
-text and page direction belong in the application setup, while paged or flowing content should also
-provide the appropriate IIIF `viewingDirection` metadata.
+Mirador handles internationalization through two distinct, interacting language layers built on `i18next`:
+
+1. **App Interface Language (`locale` / Workspace Settings):**
+   - Configured via initialization settings (`language: 'en'`) or selected by users via the **⚙ settings** menu.
+   - Controls Mirador's own user interface elements: buttons, menus, dialogs, and companion sidebar headers.
+2. **Manifest Metadata Language:**
+   - Provided inside the IIIF manifest when publishers supply multilingual metadata strings or annotation labels.
+   - When a manifest offers multiple language translations, an in-window dropdown allows users to switch metadata language.
+   - **Automatic Alignment:** If a user selects an app interface language that the loaded manifest also provides, Mirador automatically switches the manifest metadata language to match.
+
+> [!WARNING]
+> **Known Issue — Language State Alignment**:
+> Redux state alignment between the global app language and the per-window manifest language can occasionally suffer from stale-state synchronization in complex multi-window workspaces.
+
+---
+
+## Right-To-Left (RTL) Layout vs. Viewing Direction
+
+When deploying Mirador in Arabic, Hebrew, Persian, or other right-to-left language contexts, implementers must distinguish between **UI layout direction** and **content viewing direction**:
+
+- **Interface Direction (RTL Layout):**
+  Mirador's Material UI interface fully supports RTL flipping. When an RTL language is active, the entire application layout flips horizontally: the workspace control bar, window sidebars, companion panels, toolbars, and thumbnail strips invert their orientation.
+- **Viewing Direction (Resource Data):**
+  Independent of the UI layout, a manifest's declared `viewingDirection` (`left-to-right`, `right-to-left`, `top-to-bottom`, `bottom-to-top`) controls page navigation arrows, thumbnail scroll axes, and facing-page layouts in Book view.
+  A user viewing an Arabic manuscript in an English-language UI will still receive correct right-to-left page turning and thumbnail sequencing.
+
+---
 
 ## Source
 
